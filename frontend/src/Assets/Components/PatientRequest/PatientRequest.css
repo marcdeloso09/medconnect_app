@@ -1,0 +1,486 @@
+.patient-wrapper {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: linear-gradient(135deg, #2ec4c7, #4361ee);
+  font-family: "Segoe UI", sans-serif;
+  padding-top: 40px;
+  position: relative;
+}
+
+/* HEADER */
+.patient-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 25px;
+  color: white;
+}
+
+/* DISCLAIMER CARD */
+.disclaimer-card {
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 30px;
+  width: 90%;
+  max-width: 650px;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+}
+
+/* ICON */
+.alert-icon {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 15px;
+}
+
+.icon-circle-alert {
+  background: #ff4d4f;
+  width: 50px;
+  height: 50px;
+  border-radius: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+}
+
+/* SECTIONS */
+.notice-box {
+  background: #f0f7ff;
+  border: 1px solid #b6d4ff;
+  border-radius: 10px;
+  padding: 15px;
+}
+
+.emergency-box {
+  background: #fff1f0;
+  border: 1px solid #ff7875;
+  border-radius: 10px;
+  padding: 15px;
+  margin-top: 15px;
+}
+
+/* BUTTONS */
+.button-group {
+  display: flex;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.btn {
+  flex: 1;
+  padding: 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  border: none;
+  font-weight: bold;
+}
+
+.btn.start {
+  width: 48%;
+  background: #12b886;
+  margin-right: 10px;
+  color: white;
+}
+.btn.back {
+  width: 50%;
+  background: #495057;
+  color: white;
+}
+.btn a{
+    color: white;
+    text-decoration: none;
+}
+
+.btn.book {
+  width: 100%;
+  background: #12b886;
+  color: white;
+}
+
+/* CHAT UI */
+.chatbox {
+  background: rgb(255, 255, 255);
+  border-radius: 20px;
+  width: 90%;
+  max-width: 700px;
+  margin-top: 20px;
+}
+
+.chat-header {
+  background: linear-gradient(90deg, #20c997, #4668f3);
+  color: white;
+  padding: 20px;
+  border-radius: 15px 15px 0 0;
+}
+
+.chat-body {
+  background: rgb(255, 255, 255);
+  padding: 15px;
+  min-height: 300px;
+  max-height: 320px;
+  overflow-y: auto;
+}
+
+.bot-message {
+  background: #f1f3f5;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.chat-input-area {
+  border: 1.5px solid #e5e7eb;
+  background: rgb(255, 255, 255); 
+  display: flex;
+  gap: 10px;
+  margin-top: 1px;
+  padding: 15px;
+}
+
+.chat-input-area input {
+  border: 1.5px solid #e5e7eb;
+  border-radius: 10px;
+  flex: 1;
+  padding: 12px;
+  outline: none;
+}
+
+.chat-input-area button {
+  background: #20c997;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 15px 14px;
+}
+
+.chat-emergency {
+  color: #e03131;
+  font-size: 13px;
+  text-align: center;
+  height: 22px;
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+}
+
+.chat-emergency h4, 
+.chat-emergency p, 
+.chat-emergency li{
+  color: #e03131;;
+}
+
+.chat-emergency {
+  background: #fff1f0;
+  border-top: 1px solid #ffa39e;
+  color: #cf1322;
+  padding: 10px;
+  text-align: center;
+  font-size: 13px;
+}
+
+/* HOME BUTTON */
+.home-btn {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  background: white;
+  padding: 8px 14px;
+  border-radius: 20px;
+  cursor: pointer;
+}
+
+.chat-header-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.chat-title-text span {
+  display: block;
+  font-size: 12px;
+  opacity: 0.9;
+}
+
+.bot-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.chat-circle {
+  width: 40px;
+  height: 40px;
+  background: #1cbee2d7;
+  border-radius: 20%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.chat-logo-img {
+  filter: brightness(0) invert(1);
+  max-width: 150px;
+  height: 22px;
+}
+.bot-message {
+background: #f1f3f5;
+padding: 12px;
+border-radius: 12px;
+margin-bottom: 10px;
+}
+
+
+.choice-boxes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.choice-boxes button {
+padding: 8px 14px;
+border-radius: 20px;
+border: 1px solid #e5e7eb;
+background: #f8f9fa;
+cursor: pointer;
+}
+
+
+.book-btn {
+margin-top: 20px;
+width: 50%;
+background: linear-gradient(90deg, #10b981, #2563eb);
+color: white;
+border: none;
+padding: 14px;
+border-radius: 12px;
+font-weight: bold;
+}
+
+.user-row {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 10px;
+}
+
+.user-row .bot-message {
+  background: #3b82f6;
+  color: white;
+  border-radius: 18px;
+  padding: 10px 16px;
+  max-width: 70%;
+}
+
+.user-row {
+  display: flex;
+  justify-content: flex-end;
+  margin: 10px 0;
+}
+
+.user-row .bot-message {
+  background: #3b82f6;
+  color: white;
+  border-radius: 20px;
+  padding: 10px 16px;
+  max-width: 70%;
+}
+
+.typing {
+  font-style: italic;
+  opacity: 0.7;
+}
+
+@media (max-width: 370px){
+    .frontpage{
+        padding: 20px;
+    }
+    .disclaimer-card{
+      padding: 10px;
+    }
+    .btn.back,
+    .btn.start{
+      width: 48%;
+    }
+    .emergency-box,
+    .notice-box{
+      padding: 10px;
+    }
+}
+
+/* doctor results (replaces chatbox) */
+.doctor-results-container {
+  width: 90%;
+  max-width: 700px;
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.doctor-results {
+  width: 100%;
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 14px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+}
+
+.doctor-results-title {
+  margin: 0 0 10px 0;
+  font-size: 16px;
+  color: #0f172a;
+}
+
+.doctor-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid #eef2ff;
+  margin-bottom: 10px;
+}
+
+.doctor-left {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.doctor-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 10px;
+  display: grid;
+  place-items: center;
+  color: white;
+  font-weight: 700;
+  font-size: 16px;
+}
+
+.doctor-meta { display: flex; flex-direction: column; }
+.doctor-name { font-weight: 700; color: #0f172a; }
+.doctor-specialty { font-size: 13px; color: #6b7280; }
+
+.doctor-right { display: flex; align-items: center; gap: 12px; }
+.doctor-availability { text-align: right; font-size: 13px; color: #111827; }
+.avail-date { font-weight: 700; }
+.avail-time { color: #6b7280; font-size: 13px; }
+
+.btn-small {
+  background: linear-gradient(90deg,#06b6d4,#3b82f6);
+  color: white;
+  border: none;
+  padding: 8px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.no-results { color: #6b7280; font-size: 14px; margin: 8px 0; }
+
+.back-to-chat {
+  display: flex;
+  justify-content: center;
+  margin-top: 8px;
+}
+
+.btn-ghost {
+  background: transparent;
+  border: 1px solid rgba(15,23,42,0.06);
+  padding: 8px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+/* Appointment Form Container */
+.appointment-form-container {
+  background: #ffffff;
+  padding: 25px;
+  max-width: 420px;
+  border-radius: 16px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  margin: 30px auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.appointment-form-container h3 {
+  margin-bottom: 10px;
+  text-align: center;
+  color: #ffffff;
+  font-size: 20px;
+}
+
+/* Inputs */
+.appointment-form-container input {
+  padding: 12px 14px;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  font-size: 14px;
+  transition: 0.2s;
+}
+
+.appointment-form-container input:focus {
+  outline: none;
+  border-color: #1f3c88;
+  box-shadow: 0 0 0 2px rgba(31, 60, 136, 0.1);
+}
+
+/* Disabled fields */
+.appointment-form-container input:disabled {
+  background: #f4f6f9;
+  color: #666;
+  cursor: not-allowed;
+}
+
+/* Book Button */
+.appointment-form-container .btn.book {
+  background: linear-gradient(135deg, #1f3c88, #3a6cf4);
+  color: white;
+  font-weight: bold;
+  border: none;
+  border-radius: 12px;
+  padding: 14px;
+  cursor: pointer;
+  transition: 0.3s ease;
+  margin-top: 10px;
+}
+
+.appointment-form-container .btn.book:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 18px rgba(31, 60, 136, 0.25);
+}
+
+/* Smooth animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.doctor-image {
+  width: 55px;
+  height: 55px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #1f3c88;
+}
+
+.doctor-photo-preview {
+  width: 100px;
+  height: 100px;
+  margin-top: 10px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #1f3c88;
+}
