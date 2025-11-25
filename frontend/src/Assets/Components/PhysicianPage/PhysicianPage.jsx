@@ -202,7 +202,6 @@ const statCards = [
                         await api.put("doctors/doctor-profile/", formData, {
                             headers: {
                             Authorization: `Bearer ${token}`,
-                            "Content-Type": "multipart/form-data"
                             }
                         });
 
