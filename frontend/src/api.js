@@ -12,7 +12,11 @@ const api = axios.create({
 api.interceptors.request.use(config => {
   const token = localStorage.getItem("doctorToken");
 
-  if (config.url.startsWith("doctors/")) {
+  // Public routes
+  if (
+    config.url.includes("register") ||
+    config.url.includes("login")
+  ) {
     return config;
   }
 

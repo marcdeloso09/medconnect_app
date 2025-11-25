@@ -58,7 +58,7 @@ export default function PhysicianAuthentication() {
         confirm_password: formData.confirm_password
       };
 
-      const res = await api.post("register/", payload);
+      const res = await api.post("doctors/register/", payload);
       if (res.status === 201 || res.status === 200) {
         alert("Doctor Registered Successfully");
         setIsLogin(true);
