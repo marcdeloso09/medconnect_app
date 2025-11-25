@@ -1,6 +1,7 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 from .managers import DoctorManager
+from cloudinary.models import CloudinaryField
 
 class Doctor(AbstractUser):
     username = None
@@ -11,7 +12,7 @@ class Doctor(AbstractUser):
     symptoms = models.CharField(max_length=255, blank=True)
     availability_date = models.DateField(null=True, blank=True)
     availability_time = models.TimeField(null=True, blank=True)
-    profile_picture = models.ImageField(upload_to="doctor_profiles/", null=True, blank=True)
+    profile_picture = CloudinaryField('image', blank=True, null=True)
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []

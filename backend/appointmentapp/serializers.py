@@ -34,7 +34,7 @@ class DoctorRegisterSerializer(serializers.ModelSerializer):
 
 # Serializer used for listing/searching doctors (read-only)
 class DoctorListSerializer(serializers.ModelSerializer):
-    profile_picture = serializers.ImageField(read_only=True)
+    profile_picture = serializers.SerializerMethodField()
 
     class Meta:
         model = Doctor
@@ -50,6 +50,9 @@ class DoctorListSerializer(serializers.ModelSerializer):
             'availability_time',
             'profile_picture'
         ]
+
+    def get_profile_picture(self, obj):
+        return obj.profile_picture.url if obj.profile_picture else None
 
 class AppointmentSerializer(serializers.ModelSerializer):
     class Meta:
