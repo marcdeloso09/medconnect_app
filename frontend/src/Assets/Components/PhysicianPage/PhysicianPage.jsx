@@ -188,30 +188,45 @@ const statCards = [
                 <h2>Doctor Profile Settings</h2>
 
                <form
-                    className="settings-form"
-                    onSubmit={async (e) => {
-                        e.preventDefault();
-                        try {
-                        const token = localStorage.getItem("doctorToken");
+                  className="settings-form"
+                  onSubmit={async (e) => {
+                    e.preventDefault();
+                    try {
+                      const token = localStorage.getItem("doctorToken");
 
-                        const formData = new FormData();
-                        Object.keys(doctorProfile).forEach(key => {
-                            formData.append(key, doctorProfile[key]);
-                        });
+                      const formData = new FormData();
+                      formData.append("first_name", doctorProfile.first_name);
+                      formData.append("last_name", doctorProfile.last_name);
+                      formData.append("email", doctorProfile.email);
+                      formData.append("mild_illness", doctorProfile.mild_illness);
+                      formData.append("symptoms", doctorProfile.symptoms);
+                      formData.append("availability_date", doctorProfile.availability_date);
+                      formData.append("availability_time", doctorProfile.availability_time);
 
-                        await api.put("doctors/doctor-profile/", formData, {
-                            headers: {
-                            Authorization: `Bearer ${token}`,
-                            }
-                        });
+                      if (doctorProfile.profile_picture instanceof File) {
+                        formData.append("profile_picture", doctorProfile.profile_picture);
+                      }
 
-                        alert("✅ Profile updated successfully!");
-                        } catch (err) {
-                        console.error(err);
-                        alert("❌ Update failed");
+                      const res = await api.put("doctors/doctor-profile/", formData, {
+                        headers: {
+                          Authorization: `Bearer ${token}`
                         }
-                    }}
-                    >
+                      });
+
+                      // ✅ force refresh preview with Cloudinary URL
+                      setDoctorProfile(prev => ({
+                        ...prev,
+                        profile_picture: res.data.profile_picture
+                      }));
+
+                      alert("✅ Profile updated successfully!");
+                    } catch (err) {
+                      console.error(err);
+                      alert("❌ Update failed");
+                    }
+                  }}
+                >
+
                 <label>Profile Photo</label>
                     <input
                     type="file"
