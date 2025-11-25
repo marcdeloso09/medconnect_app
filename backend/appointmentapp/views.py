@@ -20,6 +20,7 @@ class DoctorListView(generics.ListAPIView):
     Returns doctors that match by mild_illness OR symptoms (case-insensitive contains).
     Optional filtering by availability_date and availability_time.
     """
+    permission_classes = [] 
     serializer_class = DoctorListSerializer
     queryset = Doctor.objects.filter(is_active=True)
 
