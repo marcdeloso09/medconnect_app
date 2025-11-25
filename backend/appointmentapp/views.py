@@ -102,16 +102,25 @@ class DoctorProfileView(APIView):
     def put(self, request):
         doctor = request.user
 
-        for field in [
-            "first_name", "last_name", "email",
-            "mild_illness", "symptoms",
-            "availability_date", "availability_time"
-        ]:
-            if field in request.data:
-                setattr(doctor, field, request.data[field])
+        doctor.first_name = request.data.get("first_name", doctor.first_name)
+        doctor.last_name = request.data.get("last_name", doctor.last_name)
+        doctor.email = request.data.get("email", doctor.email)
+        doctor.mild_illness = request.data.get("mild_illness", doctor.mild_illness)
+        doctor.symptoms = request.data.get("symptoms", doctor.symptoms)
 
+        # ✅ Prevent empty string crash for Date/Time
+        availability_date = request.data.get("availability_date")
+        availability_time = request.data.get("availability_time")
+
+        if availability_date:
+            doctor.availability_date = availability_date
+
+        if availability_time:
+            doctor.availability_time = availability_time
+
+        # ✅ Cloudinary image upload
         if request.FILES.get("profile_picture"):
-            doctor.profile_picture = request.FILES["profile_picture"]  # auto uploads to Cloudinary
+            doctor.profile_picture = request.FILES["profile_picture"]
 
         doctor.save()
 
