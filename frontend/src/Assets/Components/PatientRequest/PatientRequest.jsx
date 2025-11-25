@@ -27,7 +27,7 @@ export default function PatientRequest() {
 
   const [selectedDoctor, setSelectedDoctor] = useState(null);
   const [showAppointmentForm, setShowAppointmentForm] = useState(false);
-
+  const [duration, setDuration] = useState("");
   const [appointmentData, setAppointmentData] = useState({
     full_name: "",
     email: "",
@@ -252,7 +252,7 @@ export default function PatientRequest() {
               <div className="choice-boxes">
                 {durationOptions.map(item => (
                   <button key={item} onClick={() => {
-                    setSymptom(item);
+                    setDuration(item);
                     setMessages(prev => [...prev, { from: "user", text: item }]);
                     addAIMessageWithTyping(`You selected ${illness} with symptom ${symptom} for ${item}.`, 1200);
                     setStep(3);

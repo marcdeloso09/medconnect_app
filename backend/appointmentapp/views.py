@@ -107,7 +107,6 @@ class DoctorProfileView(APIView):
         doctor.availability_time = request.data.get("availability_time", doctor.availability_time)
         if request.FILES.get("profile_picture"):
             doctor.profile_picture = request.FILES["profile_picture"]
-        
         doctor.save()
 
         return Response({"message": "Profile updated successfully"})

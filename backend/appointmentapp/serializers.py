@@ -52,7 +52,9 @@ class DoctorListSerializer(serializers.ModelSerializer):
         ]
 
     def get_profile_picture(self, obj):
-        return obj.profile_picture.url if obj.profile_picture else None
+        if obj.profile_picture:
+            return obj.profile_picture.build_url()
+        return None
 
 class AppointmentSerializer(serializers.ModelSerializer):
     class Meta:
