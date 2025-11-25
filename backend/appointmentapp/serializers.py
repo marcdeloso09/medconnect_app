@@ -25,10 +25,13 @@ class DoctorRegisterSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         validated_data.pop('confirm_password', None)
         password = validated_data.pop('password')
-        user = Doctor(**validated_data)
-        user.set_password(password)
-        user.save()
+
+        user = Doctor.objects.create_user(
+            password=password,
+            **validated_data
+        )
         return user
+
 
 
 # Serializer used for listing/searching doctors (read-only)

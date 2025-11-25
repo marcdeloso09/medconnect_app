@@ -52,8 +52,8 @@ export default function PhysicianAuthentication() {
         specialty: formData.specialty,
         mild_illness: selectedIllness,
         symptoms: selectedSymptom,
-        availability_date: formData.availability_date || null,
-        availability_time: formData.availability_time || null,
+        availability_date: formData.availability_date ,
+        availability_time: formData.availability_time ,
         password: formData.password,
         confirm_password: formData.confirm_password
       };
@@ -67,16 +67,15 @@ export default function PhysicianAuthentication() {
       }
     } catch (error) {
       console.error("Registration error:", error.response?.data || error.message);
-      const errData = error.response?.data;
-      if (errData) {
-        // a simple human readable message:
-        const messages = [];
-        for (const [k, v] of Object.entries(errData)) {
-          messages.push(`${k}: ${Array.isArray(v) ? v.join(", ") : v}`);
-        }
-        alert("Registration Failed:\n" + messages.join("\n"));
+
+      if (error.response && typeof error.response.data === "object") {
+        const messages = Object.entries(error.response.data)
+          .map(([k, v]) => `${k}: ${Array.isArray(v) ? v.join(", ") : v}`)
+          .join("\n");
+
+        alert("Registration Failed:\n" + messages);
       } else {
-        alert("Registration Failed. See console for details.");
+        alert("Registration Failed:\n" + (error.response?.data || "Server error"));
       }
     }
   };
