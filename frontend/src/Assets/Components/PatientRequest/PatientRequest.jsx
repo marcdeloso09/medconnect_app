@@ -337,6 +337,7 @@ export default function PatientRequest() {
 
                 <input
                   type="email"
+                  id="email"
                   placeholder="Email"
                   value={appointmentData.email}
                   onChange={e => setAppointmentData({...appointmentData, email: e.target.value})}
@@ -347,12 +348,14 @@ export default function PatientRequest() {
 
                 <input
                   type="date"
+                  id="email"
                   value={appointmentData.date}
                   onChange={e => setAppointmentData({...appointmentData, date: e.target.value})}
                 />
 
                 <input
                   type="time"
+                  id="email"
                   value={appointmentData.time}
                   onChange={e => setAppointmentData({...appointmentData, time: e.target.value})}
                 />

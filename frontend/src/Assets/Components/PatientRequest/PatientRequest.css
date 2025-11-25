@@ -492,11 +492,11 @@ font-weight: bold;
 
   /* Match your existing spacing philosophy */
   .doctor-results-container {
-    padding: 10px;
+    padding: 20px;
   }
 
   .doctor-card {
-    width: 100%;
+    width: 90%;
     padding: 12px;
     border-radius: 12px;
     flex-direction: column;
@@ -563,5 +563,8 @@ font-weight: bold;
     padding: 10px;
     font-size: 13px;
   }
-
+  .doctor-results-container #email{
+    width: 89%;
+  }
 }
+
