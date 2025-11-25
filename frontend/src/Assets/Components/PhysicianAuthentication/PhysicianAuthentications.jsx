@@ -53,12 +53,12 @@ export default function PhysicianAuthentication() {
         mild_illness: selectedIllness,
         symptoms: selectedSymptom,
         availability_date: formData.availability_date ,
-        availability_time: formData.availability_time ,
+        availability_time: formData.availability_time.slice(0,5) ,
         password: formData.password,
         confirm_password: formData.confirm_password
       };
 
-      const res = await api.post("doctors/register/", payload);
+      const res = await api.post("register/", payload);
       if (res.status === 201 || res.status === 200) {
         alert("Doctor Registered Successfully");
         setIsLogin(true);

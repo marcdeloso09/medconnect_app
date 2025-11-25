@@ -97,7 +97,7 @@ CORS_ALLOWED_ORIGINS = [
 DEBUG = False
 
 ALLOWED_HOSTS = [
-    "medconnect-app-ofag.onrender.com.com",
+    "medconnect-app-ofag.onrender.com",
     "medconnect-app-1.onrender.com",
     "localhost",
     "127.0.0.1"

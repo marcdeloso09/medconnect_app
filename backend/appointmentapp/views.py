@@ -7,11 +7,8 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from django.utils import timezone
 from django.core.mail import send_mail
-from django.views.decorators.csrf import csrf_exempt
-from django.utils.decorators import method_decorator
 
 
-@method_decorator(csrf_exempt, name='dispatch')
 class DoctorRegisterView(generics.CreateAPIView):
     queryset = Doctor.objects.all()
     serializer_class = DoctorRegisterSerializer
