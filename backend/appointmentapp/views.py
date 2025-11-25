@@ -31,14 +31,16 @@ class DoctorListView(generics.ListAPIView):
         availability_date = self.request.query_params.get('availability_date')
         availability_time = self.request.query_params.get('availability_time')
 
-        filters = Q()
-        if mild_illness:
-            filters |= Q(mild_illness__icontains=mild_illness)
-        if symptoms:
-            filters |= Q(symptoms__icontains=symptoms)
-
-        if filters:
-            qs = qs.filter(filters)
+        if mild_illness and symptoms:
+            qs = qs.filter(
+                Q(mild_illness__icontains=mild_illness) |
+                Q(symptoms__icontains=symptoms)
+            )
+            
+        elif mild_illness:
+            qs = qs.filter(mild_illness__icontains=mild_illness)
+        elif symptoms:
+            qs = qs.filter(symptoms__icontains=symptoms)
 
         if availability_date:
             qs = qs.filter(availability_date=availability_date)
@@ -92,7 +94,7 @@ class DoctorProfileView(APIView):
             "symptoms": doctor.symptoms,
             "availability_date": doctor.availability_date,
             "availability_time": doctor.availability_time,
-            "profile_picture": doctor.profile_picture.url if doctor.profile_picture else None,
+            "profile_picture": doctor.profile_picture.build_url() if doctor.profile_picture else None,
         })
 
     def put(self, request):
