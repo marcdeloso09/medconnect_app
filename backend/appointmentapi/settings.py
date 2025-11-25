@@ -97,10 +97,13 @@ CORS_ALLOWED_ORIGINS = [
 DEBUG = False
 
 ALLOWED_HOSTS = [
-    "medconnect-backend.onrender.com",
+    "medconnect-app-ofag.onrender.com.com",
+    "medconnect-app-1.onrender.com",
     "localhost",
     "127.0.0.1"
 ]
+
+ALLOWED_HOSTS += ["medconnect-app-1.onrender.com"]
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
