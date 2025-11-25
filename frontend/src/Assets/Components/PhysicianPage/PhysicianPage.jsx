@@ -235,7 +235,7 @@ const statCards = [
                   }}
                 >
 
-                <label>Profile Photo</label>
+                <label>Profile Photo: (Half Body Required)</label>
                     <input
                     type="file"
                     accept="image/*"
