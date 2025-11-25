@@ -7,6 +7,7 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from django.utils import timezone
 from django.core.mail import send_mail
+from rest_framework.parsers import MultiPartParser, FormParser
 
 
 class DoctorRegisterView(generics.CreateAPIView):
@@ -36,7 +37,7 @@ class DoctorListView(generics.ListAPIView):
                 Q(mild_illness__icontains=mild_illness) |
                 Q(symptoms__icontains=symptoms)
             )
-            
+
         elif mild_illness:
             qs = qs.filter(mild_illness__icontains=mild_illness)
         elif symptoms:
@@ -82,6 +83,7 @@ class DoctorStatsView(APIView):
     
 class DoctorProfileView(APIView):
     permission_classes = [IsAuthenticated]
+    parser_classes = (MultiPartParser, FormParser)
 
     def get(self, request):
         doctor = request.user
@@ -107,12 +109,16 @@ class DoctorProfileView(APIView):
         doctor.symptoms = request.data.get("symptoms", doctor.symptoms)
         doctor.availability_date = request.data.get("availability_date", doctor.availability_date)
         doctor.availability_time = request.data.get("availability_time", doctor.availability_time)
-        if request.FILES.get("profile_picture"):
+
+        if "profile_picture" in request.FILES:
             doctor.profile_picture = request.FILES["profile_picture"]
+
         doctor.save()
 
-        return Response({"message": "Profile updated successfully"})
-
+        return Response({
+            "message": "Profile updated successfully",
+            "profile_picture": doctor.profile_picture.build_url() if doctor.profile_picture else None
+        })
 
 class CreateAppointmentView(generics.CreateAPIView):
     serializer_class = AppointmentSerializer
