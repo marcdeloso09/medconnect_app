@@ -488,3 +488,80 @@ font-weight: bold;
   border: 3px solid #1f3c88;
 }
 
+@media (max-width: 370px) {
+
+  /* Match your existing spacing philosophy */
+  .doctor-results-container {
+    padding: 10px;
+  }
+
+  .doctor-card {
+    width: 100%;
+    padding: 12px;
+    border-radius: 12px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  /* Doctor image + name layout */
+  .doctor-left {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .doctor-avatar {
+    width: 45px;
+    height: 45px;
+  }
+
+  .doctor-image {
+    width: 45px;
+    height: 45px;
+    object-fit: cover;
+  }
+
+  /* ✅ READABILITY IMPROVEMENTS */
+  .doctor-meta {
+    font-size: 13px;
+    line-height: 1.4;
+  }
+
+  .doctor-name {
+    font-weight: 600;
+    font-size: 14px;
+  }
+
+  .doctor-specialty {
+    font-size: 12px;
+    color: #555;
+  }
+
+  /* Availability section */
+  .doctor-availability {
+    width: 100%;
+    font-size: 12px;
+    background: #f7f7f7;
+    padding: 8px;
+    border-radius: 8px;
+  }
+
+  .avail-date,
+  .avail-time {
+    margin-bottom: 4px;
+  }
+
+  /* Action area */
+  .doctor-right {
+    width: 100%;
+  }
+
+  .doctor-right button {
+    width: 100%;
+    padding: 10px;
+    font-size: 13px;
+  }
+
+}
