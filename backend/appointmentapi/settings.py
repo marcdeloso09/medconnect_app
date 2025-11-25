@@ -106,8 +106,8 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
-EMAIL_HOST_USER = 'marccascara@gmail.com'
-EMAIL_HOST_PASSWORD = 'usgwtwmpsfmtjiko'
+EMAIL_HOST_USER = 'appointmentmedical41@gmail.com'
+EMAIL_HOST_PASSWORD = 'rmtufxkquanwtclv'
 DEFAULT_FROM_EMAIL = 'HealthConnect <healthconnect.system@gmail.com>'
 
 MEDIA_URL = '/media/'
