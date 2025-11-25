@@ -31,6 +31,11 @@ export default function PhysicianPage() {
   last_name: "",
   email: "",
   specialty: "",
+  mild_illness: "",
+  symptoms: "",
+  availability_date: "",
+  availability_time: "",
+  profile_picture: null
 });
 
 const handleAction = async (id, action) => {
@@ -78,7 +83,10 @@ useEffect(() => {
         const res = await api.get("doctors/doctor-profile/", {
           headers: { Authorization: `Bearer ${token}` }
         });
-        setDoctorProfile(res.data);
+        setDoctorProfile({
+          ...res.data,
+          profile_picture: res.data.profile_picture || null
+        });
     } catch (err) {
         console.error("Profile load error", err);
     }
