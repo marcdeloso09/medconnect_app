@@ -96,7 +96,7 @@ class DoctorProfileView(APIView):
             "symptoms": doctor.symptoms,
             "availability_date": doctor.availability_date,
             "availability_time": doctor.availability_time,
-            "profile_picture": doctor.profile_picture.build_url() if doctor.profile_picture else None,
+            "profile_picture": doctor.profile_picture.build_url(secure=True) if doctor.profile_picture else None,
         })
 
     def put(self, request):

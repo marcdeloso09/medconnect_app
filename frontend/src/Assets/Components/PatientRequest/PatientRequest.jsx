@@ -358,19 +358,25 @@ export default function PatientRequest() {
                 />
 
                 <button className="btn book" onClick={async () => {
-                  await api.post("/appointments/create/", {
-                    doctor: selectedDoctor.id,
-                    patient_name: appointmentData.full_name,
-                    patient_email: appointmentData.email,
-                    mild_illness: illness,
-                    symptoms: symptom,
-                    appointment_date: appointmentData.date,
-                    appointment_time: appointmentData.time
-                  });
-                  alert("Appointment request sent!");
-                  setShowAppointmentForm(false);
+                  try {
+                    await api.post("doctors/appointments/create/", {
+                      doctor: selectedDoctor.id,
+                      patient_name: appointmentData.full_name,
+                      patient_email: appointmentData.email,
+                      mild_illness: illness,
+                      symptoms: symptom,
+                      appointment_date: appointmentData.date,
+                      appointment_time: appointmentData.time
+                    });
+
+                    alert("✅ Appointment request sent!");
+                    setShowAppointmentForm(false);
+                  } catch (error) {
+                    console.error(error);
+                    alert("❌ Failed to book appointment");
+                  }
                 }}>
-                  ✅ Book Dr. {selectedDoctor.first_name} Now
+                ✅ Book Dr. {selectedDoctor.first_name} Now
                 </button>
               </div>
             )}
