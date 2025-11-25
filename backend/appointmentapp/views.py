@@ -102,32 +102,31 @@ class DoctorProfileView(APIView):
     def put(self, request):
         doctor = request.user
 
-        doctor.first_name = request.data.get("first_name", doctor.first_name)
-        doctor.last_name = request.data.get("last_name", doctor.last_name)
-        doctor.email = request.data.get("email", doctor.email)
-        doctor.mild_illness = request.data.get("mild_illness", doctor.mild_illness)
-        doctor.symptoms = request.data.get("symptoms", doctor.symptoms)
+        try:
+            doctor.first_name = request.data.get("first_name", doctor.first_name)
+            doctor.last_name = request.data.get("last_name", doctor.last_name)
+            doctor.email = request.data.get("email", doctor.email)
+            doctor.mild_illness = request.data.get("mild_illness", doctor.mild_illness)
+            doctor.symptoms = request.data.get("symptoms", doctor.symptoms)
 
-        # ✅ Prevent empty string crash for Date/Time
-        availability_date = request.data.get("availability_date")
-        availability_time = request.data.get("availability_time")
+            if request.data.get("availability_date"):
+                doctor.availability_date = request.data.get("availability_date")
 
-        if availability_date:
-            doctor.availability_date = availability_date
+            if request.data.get("availability_time"):
+                doctor.availability_time = request.data.get("availability_time")
 
-        if availability_time:
-            doctor.availability_time = availability_time
+            if 'profile_picture' in request.FILES:
+                doctor.profile_picture = request.FILES['profile_picture']
 
-        # ✅ Cloudinary image upload
-        if request.FILES.get("profile_picture"):
-            doctor.profile_picture = request.FILES["profile_picture"]
+            doctor.save()
 
-        doctor.save()
+            return Response({
+                "message": "Profile updated successfully",
+                "profile_picture": doctor.profile_picture.build_url() if doctor.profile_picture else None
+            }, status=200)
 
-        return Response({
-            "message": "Profile updated successfully",
-            "profile_picture": doctor.profile_picture.build_url() if doctor.profile_picture else None
-        }, status=200)
+        except Exception as e:
+            return Response({"error": str(e)}, status=500)
 
 
 class CreateAppointmentView(generics.CreateAPIView):
