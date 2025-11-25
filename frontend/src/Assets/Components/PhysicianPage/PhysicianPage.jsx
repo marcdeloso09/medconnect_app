@@ -11,8 +11,8 @@ export default function PhysicianPage() {
     useEffect(() => {
     const token = localStorage.getItem("doctorToken");
 
-    api.get("/appointments/doctor/", {
-        headers: { Authorization: `Bearer ${token}` }
+    api.get("doctors/appointments/doctor/", {
+      headers: { Authorization: `Bearer ${token}` }
     })
     .then(res => setAppointments(res.data))
     .catch(err => console.error("Appointment load error:", err));
@@ -37,7 +37,7 @@ const handleAction = async (id, action) => {
   try {
     const token = localStorage.getItem("doctorToken");
 
-    const res = await api.post(`/appointments/action/${id}/`, { action }, {
+    const res = await api.post(`doctors/appointments/action/${id}/`, { action }, {
       headers: { Authorization: `Bearer ${token}` }
     });
 
@@ -63,10 +63,8 @@ useEffect(() => {
     try {
       const token = localStorage.getItem("doctorToken");
 
-      const res = await api.get("/doctor-stats/", {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
+      const res = await api.get("doctors/doctor-stats/", {
+        headers: { Authorization: `Bearer ${token}` }
       });
 
       setStats(res.data);
@@ -77,8 +75,8 @@ useEffect(() => {
   const fetchDoctorProfile = async () => {
     try {
         const token = localStorage.getItem("doctorToken");
-        const res = await api.get("/doctor-profile/", {
-        headers: { Authorization: `Bearer ${token}` }
+        const res = await api.get("doctors/doctor-profile/", {
+          headers: { Authorization: `Bearer ${token}` }
         });
         setDoctorProfile(res.data);
     } catch (err) {
@@ -201,7 +199,7 @@ const statCards = [
                             formData.append(key, doctorProfile[key]);
                         });
 
-                        await api.put("/doctor-profile/", formData, {
+                        await api.put("doctors/doctor-profile/", formData, {
                             headers: {
                             Authorization: `Bearer ${token}`,
                             }
