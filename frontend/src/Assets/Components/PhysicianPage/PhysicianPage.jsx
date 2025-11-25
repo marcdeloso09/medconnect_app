@@ -129,18 +129,34 @@ const statCards = [
           </div>
         </div>
 
-        <nav className="side-nav">
-          <button className="side-link active">Overview</button>
+          <nav className="side-nav">
           <button 
-            className="side-link" 
+            className={`side-link ${activePage === "overview" ? "active" : ""}`} 
+            onClick={() => setActivePage("overview")}
+          >
+            Overview
+          </button>
+
+          <button 
+            className={`side-link ${activePage === "appointments" ? "active" : ""}`} 
             onClick={() => setActivePage("appointments")}
-            >
+          >
             Appointments
-        </button>
-          <button className="side-link">Patients</button>
-          <button className="side-link"  onClick={() => setActivePage("settings")}>
+          </button>
+
+          <button 
+            className={`side-link ${activePage === "patients" ? "active" : ""}`}
+            onClick={() => setActivePage("patients")}
+          >
+            Patients
+          </button>
+
+          <button 
+            className={`side-link ${activePage === "settings" ? "active" : ""}`}  
+            onClick={() => setActivePage("settings")}
+          >
             Settings
-            </button>
+          </button>
         </nav>
 
         <div className="sidebar-footer">
