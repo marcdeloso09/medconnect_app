@@ -83,7 +83,7 @@ export default function PhysicianAuthentication() {
   const handleLogin = async (e) => {
   e.preventDefault();
   try {
-    const res = await api.post("login/", loginData);
+    const res = await api.post("doctors/login/", loginData);
     localStorage.setItem("doctorToken", res.data.access);
     navigate("/physician-dashboard");
     alert("Successfully Logged In")
