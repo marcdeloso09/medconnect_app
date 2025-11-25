@@ -3,7 +3,7 @@ import axios from "axios";
 const BASE_URL =
   window.location.hostname === "localhost"
     ? "http://127.0.0.1:8000/api/"
-    : "https://medconnect_app.onrender.com/api/";
+    : "https://medconnect-app-ofag.onrender.com/api/";
 
 const api = axios.create({
   baseURL: BASE_URL,

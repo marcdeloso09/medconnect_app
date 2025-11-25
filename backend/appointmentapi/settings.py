@@ -76,6 +76,7 @@ CORS_ALLOW_HEADERS = [
 
 CORS_ALLOW_ALL_ORIGINS = True
 CSRF_TRUSTED_ORIGINS = [
+    "https://medconnect-app-1.onrender.com",
     "http://localhost:3000",
     "http://127.0.0.1:3000",
     "http://192.168.1.8:3000"
@@ -90,13 +91,13 @@ REST_FRAMEWORK = {
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
     "http://127.0.0.1:3000",
-    "http://192.168.1.8:3000"
+    "https://medconnect-app-1.onrender.com/"
 ]
 
 DEBUG = False
 
 ALLOWED_HOSTS = [
-    "medconnect_app.onrender.com",
+    "medconnect-backend.onrender.com",
     "localhost",
     "127.0.0.1"
 ]
