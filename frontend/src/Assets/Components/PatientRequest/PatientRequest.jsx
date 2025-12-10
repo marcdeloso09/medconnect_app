@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import stethoscope from "../Files/stethoscope.png";
 import agent from "../Files/agents.png";
 import api from "../../../api"; // ensure this points to your frontend api.js
+import { formatTime12h } from "../utils/time";
 
 export default function PatientRequest() {
   const [showChat, setShowChat] = useState(false);
@@ -313,7 +314,7 @@ export default function PatientRequest() {
                 <div className="doctor-right">
                   <div className="doctor-availability">
                     <div className="avail-date">Available Date: {doc.availability_date || 'Date N/A'}</div>
-                    <div className="avail-time">Available time: {doc.availability_time || 'Time N/A'}</div>
+                    <div className="avail-time">Available time: {formatTime12h(doc.availability_time)}</div>
                   </div>
                   <button className="btn-small" onClick={() => {
                     setSelectedDoctor(doc);

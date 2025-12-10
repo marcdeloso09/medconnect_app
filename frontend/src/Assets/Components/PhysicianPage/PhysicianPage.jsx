@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./PhysicianPage.css";
 import api from "../../../api";
+import { formatTime12h } from "../utils/time";
 
 export default function PhysicianPage() {
   const navigate = useNavigate();
@@ -345,7 +346,7 @@ const statCards = [
                             <td>{appt.patient_name}</td>
                             <td>{appt.mild_illness} - {appt.symptoms}</td>
                             <td>{appt.appointment_date}</td>
-                            <td>{appt.appointment_time}</td>
+                            <td>{formatTime12h(appt.appointment_time)}</td>
                             <td>
                             <span className={`status-badge ${appt.status}`}>
                                 {appt.status}
