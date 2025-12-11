@@ -8,3 +8,16 @@ export function formatTime12h(time24) {
 
   return `${hour12}:${minutes.toString().padStart(2, "0")} ${period}`;
 }
+
+// Converts "YYYY-MM-DD" → "December 11, 2025"
+export function formatDateLong(dateStr) {
+  if (!dateStr) return "Date N/A";
+
+  const date = new Date(dateStr);
+
+  return date.toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric"
+  });
+}
