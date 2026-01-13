@@ -24,6 +24,6 @@ urlpatterns = [
     path("appointments/action/<int:pk>/", AppointmentActionView.as_view()),
 
     # Patient routes
-    path("patients/register/", PatientRegisterView.as_view()),
-    path("patients/login/", PatientLoginView.as_view()),
+    path("register/", PatientRegisterView.as_view()),
+    path("login/", PatientLoginView.as_view()),
 ]
