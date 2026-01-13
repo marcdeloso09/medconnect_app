@@ -50,7 +50,6 @@ export default function PatientAuthentication() {
 
       if (res.status === 201 || res.status === 200) {
         localStorage.setItem("patientName", formData.first_name);
-        localStorage.setItem("patientToken", "signedup"); 
         alert("Patient Registered Successfully");
         setIsLogin(true);
       }
