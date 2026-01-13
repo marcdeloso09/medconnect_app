@@ -14,7 +14,7 @@ from pathlib import Path
 import dj_database_url
 import os
 from datetime import timedelta
-
+import cloudinary
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -42,7 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'corsheaders',
-    'appointmentapp'
+    'appointmentapp',
 ]
 
 
@@ -122,6 +122,28 @@ MEDIA_ROOT = BASE_DIR / 'media'
 
 AUTH_USER_MODEL = 'appointmentapp.Doctor'
 
+RENDER = os.environ.get("RENDER") == "true"
+
+if RENDER:
+    DATABASES = {
+        'default': dj_database_url.config(
+            default=os.getenv("DATABASE_URL"),
+            conn_max_age=600,
+            ssl_require=True
+        )
+    }
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': 'medical_appointments',
+            'USER': 'root',
+            'PASSWORD': '',
+            'HOST': 'localhost',
+            'PORT': '3306',
+        }
+    }
+
 ROOT_URLCONF = 'appointmentapi.urls'
 
 TEMPLATES = [
@@ -145,13 +167,6 @@ MEDIA_ROOT = BASE_DIR / 'media'
 
 WSGI_APPLICATION = 'appointmentapi.wsgi.application'
 
-
-# Database
-# https://docs.djangoproject.com/en/4.2/ref/settings/#databases
-
-DATABASES = {
-    'default': dj_database_url.parse(os.environ.get("DATABASE_URL"))
-}
 
 
 # Password validation
@@ -201,7 +216,7 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 INSTALLED_APPS += ['cloudinary']
 
-import cloudinary
+
 
 cloudinary.config(
   cloud_name = os.environ.get("CLOUDINARY_NAME"),
