@@ -1,0 +1,171 @@
+.physician-wrapper {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: linear-gradient(135deg, #2ec4c7, #4361ee);
+  font-family: "Segoe UI", sans-serif;
+  padding-top: 40px;
+}
+
+.physician-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 25px;
+  color: white;
+}
+
+.auth-card {
+  background: white;
+  border-radius: 20px;
+  padding: 30px;
+  width: 90%;
+  max-width: 650px;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+}
+
+.auth-card h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.doctor-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.form-row {
+  display: flex;
+  gap: 12px;
+}
+
+.doctor-form input,
+.doctor-form textarea,
+.doctor-form select {
+  width: 100%;
+  padding: 12px;
+  border-radius: 10px;
+  border: 1.5px solid #e5e7eb;
+  outline: none;
+  font-size: 14px;
+}
+
+.doctor-btn {
+  background: linear-gradient(90deg, #10b981, #2563eb);
+  color: white;
+  border: none;
+  padding: 14px;
+  border-radius: 12px;
+  font-weight: bold;
+  cursor: pointer;
+  width: 100%;
+}
+
+.switch-auth {
+  text-align: center;
+  font-size: 14px;
+  margin-top: 10px;
+}
+
+.switch-auth span {
+  color: #2563eb;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.switch-auth span:hover {
+  text-decoration: underline;
+}
+
+input[type="email"] {
+  width: 96%;
+}
+
+input[type="password"] {
+  width: 96%;
+}
+
+input[type="text"] {
+  width: 96%;
+}
+/* Phones (320px and below) */
+@media (max-width: 320px){
+  .physician-wrapper {
+    padding: 10px;
+  }
+
+  .auth-card {
+    width: 50%;
+    padding: 20px;
+  }
+
+  .form-row {
+    flex-direction: column;
+  }
+  .doctor-form input,
+  .doctor-form textarea{
+   width: 91%;
+  }
+  .home-btn{
+    visibility: hidden;
+  }
+  .doctor-form select {
+   width: 101%;
+  }
+  .doctor-btn{
+    width: 270px;
+  }
+}
+
+@media (max-width: 370px){
+    .physician-wrapper {
+    padding: 10px;
+  }
+
+  .auth-card {
+    width: 50%;
+    padding: 20px;
+  }
+
+  .form-row {
+    flex-direction: column;
+  }
+  .doctor-form input,
+  .doctor-form textarea{
+   width: 91%;
+  }
+  .home-btn{
+    visibility: hidden;
+  }
+  .doctor-form select {
+   width: 100%;
+  }
+  .doctor-btn{
+    width: 303px;
+  }
+}
+/* Small tablets / large phones (up to 600px) */
+@media (max-width: 600px) {
+  .physician-wrapper {
+    padding: 20px;
+  }
+
+  .auth-card {
+    width: 95%;
+  }
+
+  .form-row {
+    flex-direction: column;
+  }
+}
+
+.availability-title {
+  margin-top: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #374151;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}

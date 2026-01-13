@@ -8,6 +8,8 @@ from rest_framework.permissions import IsAuthenticated
 from django.utils import timezone
 from django.core.mail import send_mail
 from rest_framework.parsers import MultiPartParser, FormParser
+from .models import Patient
+from .serializers import PatientRegisterSerializer, PatientLoginSerializer
 
 
 class DoctorRegisterView(generics.CreateAPIView):
@@ -188,3 +190,26 @@ class AppointmentActionView(APIView):
         )
 
         return Response({"status": appointment.status})
+    
+class PatientRegisterView(generics.CreateAPIView):
+    queryset = Patient.objects.all()
+    serializer_class = PatientRegisterSerializer
+
+class PatientLoginView(APIView):
+    def post(self, request):
+        serializer = PatientLoginSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+
+        email = serializer.validated_data['email']
+        password = serializer.validated_data['password']
+
+        try:
+            patient = Patient.objects.get(email=email, password=password)
+        except Patient.DoesNotExist:
+            return Response({"error": "Invalid credentials"}, status=400)
+
+        return Response({
+            "message": "Login successful",
+            "patient_id": patient.id,
+            "email": patient.email
+        })
