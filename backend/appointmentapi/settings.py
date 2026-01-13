@@ -29,7 +29,7 @@ SECRET_KEY = 'django-insecure-yz0lcx0wxw%m0c2l#r8wyn!zu-%pfeewj^p1clrbg#)n%=0^%$
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["127.0.0.1", "localhost"]
+ALLOWED_HOSTS = ['*',"127.0.0.1", "localhost"]
 
 # Application definition
 
@@ -100,7 +100,7 @@ CORS_ALLOWED_ORIGINS = [
 DEBUG = False
 
 ALLOWED_HOSTS = [
-    "medconnect-app-ofag.onrender.com",
+    "medconnect-app-aee6.onrender.com",
     "medconnect-app-1.onrender.com",
     "localhost",
     "127.0.0.1"
