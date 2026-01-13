@@ -1,4 +1,4 @@
-import "./PatientAuthentication.css";
+import "./PatientAuthenticationPage.css";
 import stethoscope from "../Files/stethoscope.png";
 import { Link, useNavigate } from "react-router-dom";
 import React, { useState } from "react";

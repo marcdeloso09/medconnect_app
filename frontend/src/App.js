@@ -5,7 +5,6 @@ import PatientAuthentication from './Assets/Components/PatientAuthentication/Pat
 import PatientRequest from './Assets/Components/PatientRequest/PatientRequest';
 import PhysicianAuthentications from './Assets/Components/PhysicianAuthentication/PhysicianAuthentications';
 import PhysicianPage from './Assets/Components/PhysicianPage/PhysicianPage';
-import PatientAuthentication from "./Assets/Components/PatientAuthenticationPage/PatientAuthentication";
 
 function App() {
   return (
