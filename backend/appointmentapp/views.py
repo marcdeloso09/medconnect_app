@@ -210,6 +210,6 @@ class PatientLoginView(APIView):
 
         return Response({
             "message": "Login successful",
-            "patient_id": patient.id,
+            "patient_id": patient.first_name,
             "email": patient.email
         })

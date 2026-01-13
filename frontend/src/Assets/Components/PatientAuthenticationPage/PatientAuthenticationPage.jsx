@@ -49,6 +49,8 @@ export default function PatientAuthentication() {
       const res = await api.post("patients/register/", payload);
 
       if (res.status === 201 || res.status === 200) {
+        localStorage.setItem("patientName", formData.first_name);
+        localStorage.setItem("patientToken", "signedup"); 
         alert("Patient Registered Successfully");
         setIsLogin(true);
       }
@@ -71,9 +73,10 @@ export default function PatientAuthentication() {
     e.preventDefault();
     try {
       const res = await api.post("patients/login/", loginData);
-      localStorage.setItem("patientToken", res.data.access);
-      navigate("/patient-dashboard");
-      alert("Successfully Logged In");
+        localStorage.setItem("patientToken", "loggedin");
+        localStorage.setItem("patientName", res.data.first_name);
+        navigate("/patient-dashboard");
+        alert("Successfully Logged In");
     } catch {
       alert("Invalid Credentials");
     }

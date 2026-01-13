@@ -5,6 +5,9 @@ import PatientAuthentication from './Assets/Components/PatientAuthenticationPage
 import PatientRequest from './Assets/Components/PatientRequest/PatientRequest';
 import PhysicianAuthentications from './Assets/Components/PhysicianAuthentication/PhysicianAuthentications';
 import PhysicianPage from './Assets/Components/PhysicianPage/PhysicianPage';
+import PatientAuthentication from "./Assets/Components/PatientAuthenticationPage/PatientAuthenticationPage";
+import PatientPage from "./Assets/Components/PatientPage/PatientPage";
+import ProtectedPatientRoute from "./Assets/Components/Files/ProtectedPatientRoute";
 
 function App() {
   return (
@@ -15,7 +18,14 @@ function App() {
         {/* PATIENT FLOW */}
         <Route path="/patient" element={<PatientAuthentication />} />
         <Route path="/patient/request" element={<PatientRequest />} />
-
+        <Route
+          path="/patient-dashboard"
+          element={
+            <ProtectedPatientRoute>
+              <PatientPage />
+            </ProtectedPatientRoute>
+          }
+        />
         {/* DOCTOR FLOW */}
         <Route path="/doctor" element={<PhysicianAuthentications />} />
         <Route path="/physician-dashboard" element={<PhysicianPage />} />
