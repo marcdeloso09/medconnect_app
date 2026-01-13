@@ -1,7 +1,7 @@
 import './App.css';
 import { Routes, Route, BrowserRouter } from 'react-router-dom';
 import { Frontpage } from './Assets/Components/Frontpage/Frontpage';
-import PatientAuthentication from './Assets/Components/PatientAuthentication/PatientAuthenticationPage';
+import PatientAuthentication from './Assets/Components/PatientAuthenticationPage/PatientAuthenticationPage';
 import PatientRequest from './Assets/Components/PatientRequest/PatientRequest';
 import PhysicianAuthentications from './Assets/Components/PhysicianAuthentication/PhysicianAuthentications';
 import PhysicianPage from './Assets/Components/PhysicianPage/PhysicianPage';
