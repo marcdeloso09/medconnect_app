@@ -5,7 +5,6 @@ import PatientAuthentication from './Assets/Components/PatientAuthenticationPage
 import PatientRequest from './Assets/Components/PatientRequest/PatientRequest';
 import PhysicianAuthentications from './Assets/Components/PhysicianAuthentication/PhysicianAuthentications';
 import PhysicianPage from './Assets/Components/PhysicianPage/PhysicianPage';
-import PatientAuthentication from "./Assets/Components/PatientAuthenticationPage/PatientAuthenticationPage";
 import PatientPage from "./Assets/Components/PatientPage/PatientPage";
 import ProtectedPatientRoute from "./Assets/Components/Files/ProtectedPatientRoute";
 
