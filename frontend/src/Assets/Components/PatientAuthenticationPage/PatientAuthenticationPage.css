@@ -1,4 +1,4 @@
-.physician-wrapper {
+.patient-wrapper {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -8,7 +8,7 @@
   padding-top: 40px;
 }
 
-.physician-header {
+.patient-header {
   display: flex;
   align-items: center;
   gap: 12px;
@@ -30,7 +30,7 @@
   margin-bottom: 20px;
 }
 
-.doctor-form {
+.patient-form {
   display: flex;
   flex-direction: column;
   gap: 15px;
@@ -41,9 +41,9 @@
   gap: 12px;
 }
 
-.doctor-form input,
-.doctor-form textarea,
-.doctor-form select {
+.patient-form input,
+.patient-form textarea,
+.patient-form select {
   width: 100%;
   padding: 12px;
   border-radius: 10px;
@@ -52,7 +52,7 @@
   font-size: 14px;
 }
 
-.doctor-btn {
+.patient-btn {
   background: linear-gradient(90deg, #10b981, #2563eb);
   color: white;
   border: none;
@@ -90,9 +90,10 @@ input[type="password"] {
 input[type="text"] {
   width: 96%;
 }
+
 /* Phones (320px and below) */
 @media (max-width: 320px){
-  .physician-wrapper {
+  .patient-wrapper {
     padding: 10px;
   }
 
@@ -104,23 +105,27 @@ input[type="text"] {
   .form-row {
     flex-direction: column;
   }
-  .doctor-form input,
-  .doctor-form textarea{
-   width: 91%;
+
+  .patient-form input,
+  .patient-form textarea{
+    width: 91%;
   }
+
   .home-btn{
     visibility: hidden;
   }
-  .doctor-form select {
-   width: 101%;
+
+  .patient-form select {
+    width: 101%;
   }
-  .doctor-btn{
+
+  .patient-btn{
     width: 270px;
   }
 }
 
 @media (max-width: 370px){
-    .physician-wrapper {
+  .patient-wrapper {
     padding: 10px;
   }
 
@@ -132,23 +137,28 @@ input[type="text"] {
   .form-row {
     flex-direction: column;
   }
-  .doctor-form input,
-  .doctor-form textarea{
-   width: 91%;
+
+  .patient-form input,
+  .patient-form textarea{
+    width: 91%;
   }
+
   .home-btn{
     visibility: hidden;
   }
-  .doctor-form select {
-   width: 100%;
+
+  .patient-form select {
+    width: 100%;
   }
-  .doctor-btn{
+
+  .patient-btn{
     width: 303px;
   }
 }
+
 /* Small tablets / large phones (up to 600px) */
 @media (max-width: 600px) {
-  .physician-wrapper {
+  .patient-wrapper {
     padding: 20px;
   }
 
@@ -159,13 +169,4 @@ input[type="text"] {
   .form-row {
     flex-direction: column;
   }
-}
-
-.availability-title {
-  margin-top: 10px;
-  font-size: 14px;
-  font-weight: 600;
-  color: #374151;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
 }
