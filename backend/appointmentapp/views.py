@@ -195,6 +195,13 @@ class PatientRegisterView(generics.CreateAPIView):
     queryset = Patient.objects.all()
     serializer_class = PatientRegisterSerializer
 
+    def create(self, request, *args, **kwargs):
+        try:
+            return super().create(request, *args, **kwargs)
+        except Exception as e:
+            print("🔥 PATIENT REGISTER ERROR:", str(e))
+            raise
+
 class PatientLoginView(APIView):
     def post(self, request):
         serializer = PatientLoginSerializer(data=request.data)
