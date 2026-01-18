@@ -10,7 +10,8 @@ from django.core.mail import send_mail
 from rest_framework.parsers import MultiPartParser, FormParser
 from .models import Patient
 from .serializers import PatientRegisterSerializer, PatientLoginSerializer
-
+from rest_framework_simplejwt.views import TokenObtainPairView
+from .serializers import DoctorTokenObtainPairSerializer
 
 class DoctorRegisterView(generics.CreateAPIView):
     queryset = Doctor.objects.all()
@@ -220,3 +221,6 @@ class PatientLoginView(APIView):
             "first_name": patient.first_name,
             "email": patient.email
         })
+
+class DoctorLoginView(TokenObtainPairView):
+    serializer_class = DoctorTokenObtainPairSerializer

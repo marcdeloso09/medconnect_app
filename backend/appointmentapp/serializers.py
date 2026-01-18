@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from .models import Doctor
 from .models import Appointment, Patient
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
 class DoctorRegisterSerializer(serializers.ModelSerializer):
     confirm_password = serializers.CharField(write_only=True)
@@ -88,3 +89,9 @@ class PatientLoginSerializer(serializers.Serializer):
     email = serializers.EmailField()
     password = serializers.CharField()
 
+class DoctorTokenObtainPairSerializer(TokenObtainPairSerializer):
+    username_field = 'email'
+
+    def validate(self, attrs):
+        attrs['username'] = attrs.get('email')
+        return super().validate(attrs)
