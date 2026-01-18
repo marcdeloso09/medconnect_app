@@ -106,6 +106,14 @@ ALLOWED_HOSTS = [
     "127.0.0.1"
 ]
 
+DATABASES = {
+    "default": dj_database_url.config(
+        default=os.getenv("DATABASE_URL"),
+        conn_max_age=600,
+        ssl_require=True
+    )
+}
+
 ALLOWED_HOSTS += ["medconnect-app-1.onrender.com"]
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
@@ -121,28 +129,6 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
 AUTH_USER_MODEL = 'appointmentapp.Doctor'
-
-RENDER = os.environ.get("RENDER") == "true"
-
-if RENDER:
-    DATABASES = {
-        'default': dj_database_url.config(
-            default=os.getenv("DATABASE_URL"),
-            conn_max_age=600,
-            ssl_require=True
-        )
-    }
-else:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.mysql',
-            'NAME': 'medical_appointments',
-            'USER': 'root',
-            'PASSWORD': '',
-            'HOST': 'localhost',
-            'PORT': '3306',
-        }
-    }
 
 ROOT_URLCONF = 'appointmentapi.urls'
 
