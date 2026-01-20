@@ -18,7 +18,7 @@ export default function PhysicianPage() {
   const loadSameSpecialtyDoctors = async () => {
     try {
       const token = localStorage.getItem("doctorToken");
-      const res = await api.get("doctors/same-specialty/", {
+      const res = await api.get("same-specialty/", {
         headers: { Authorization: `Bearer ${token}` }
       });
       setSameSpecialtyDoctors(res.data);
@@ -54,8 +54,12 @@ export default function PhysicianPage() {
   symptoms: "",
   availability_date: "",
   availability_time: "",
-  profile_picture: null
+  profile_picture: null,
+  latitude: "",
+  longitude: "",
+  clinic_address: ""
 });
+
 
 const handleAction = async (id, action) => {
   try {

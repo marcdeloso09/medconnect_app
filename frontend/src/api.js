@@ -12,20 +12,16 @@ const api = axios.create({
 api.interceptors.request.use(config => {
   const token = localStorage.getItem("doctorToken");
 
-  // Public routes
-  if (
-    config.url.includes("register") ||
+  const isPublic =
     config.url.includes("login") ||
-    config.url.includes("patients/notifications")
-  ) {
-    return config;
-  }
+    config.url.includes("register");
 
-  if (token) {
+  if (!isPublic && token) {
     config.headers.Authorization = `Bearer ${token}`;
   }
 
   return config;
 });
+
 
 export default api;

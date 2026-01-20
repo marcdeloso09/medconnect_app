@@ -7,7 +7,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include('appointmentapp.urls')),
 
-
 ]
 
 if settings.DEBUG:
