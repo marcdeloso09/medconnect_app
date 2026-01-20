@@ -17,20 +17,18 @@ from rest_framework_simplejwt.views import TokenObtainPairView
 
 urlpatterns = [
     # Doctor routes
-    path('', DoctorListView.as_view(), name='doctor-list'),
-    path("doctors/register/", DoctorRegisterView.as_view(), name='doctor-register'),
-    path("doctors/login/", DoctorLoginView.as_view(), name='doctor-login'),
-    path("doctor-stats/", DoctorStatsView.as_view(), name="doctor-stats"),
-    path("doctor-profile/", DoctorProfileView.as_view(), name="doctor-profile"),
-    path("appointments/create/", CreateAppointmentView.as_view()),
-    path("appointments/doctor/", DoctorAppointmentsView.as_view()),
-    path("appointments/action/<int:pk>/", AppointmentActionView.as_view()),
+    path('doctors/', DoctorListView.as_view()),
+    path('doctors/register/', DoctorRegisterView.as_view()),
+    path('doctors/login/', DoctorLoginView.as_view()),
+    path('doctors/doctor-stats/', DoctorStatsView.as_view()),
+    path('doctors/doctor-profile/', DoctorProfileView.as_view()),
+    path('doctors/appointments/create/', CreateAppointmentView.as_view()),
+    path('doctors/appointments/doctor/', DoctorAppointmentsView.as_view()),
+    path('doctors/appointments/action/<int:pk>/', AppointmentActionView.as_view()),
+    path('doctors/same-specialty/', SameSpecialtyDoctorsView.as_view()),
 
     # Patient routes
-    path("patients/register/", PatientRegisterView.as_view()),
-    path("patients/login/", PatientLoginView.as_view()),
-    path("notifications/", PatientNotificationsView.as_view()),
-    path("doctors/same-specialty/", SameSpecialtyDoctorsView.as_view()),
-    
-
+    path('patients/register/', PatientRegisterView.as_view()),
+    path('patients/login/', PatientLoginView.as_view()),
+    path('patients/notifications/', PatientNotificationsView.as_view()),
 ]

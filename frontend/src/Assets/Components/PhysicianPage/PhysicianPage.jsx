@@ -18,7 +18,7 @@ export default function PhysicianPage() {
   const loadSameSpecialtyDoctors = async () => {
     try {
       const token = localStorage.getItem("doctorToken");
-      const res = await api.get("same-specialty/", {
+      const res = await api.get("doctors/same-specialty/", {
         headers: { Authorization: `Bearer ${token}` }
       });
       setSameSpecialtyDoctors(res.data);
@@ -249,6 +249,9 @@ const statCards = [
                       formData.append("symptoms", doctorProfile.symptoms);
                       formData.append("availability_date", doctorProfile.availability_date);
                       formData.append("availability_time", doctorProfile.availability_time);
+                      formData.append("latitude", doctorProfile.latitude);
+                      formData.append("longitude", doctorProfile.longitude);
+                      formData.append("clinic_address", doctorProfile.clinic_address);
 
                       if (doctorProfile.profile_picture instanceof File) {
                         formData.append("profile_picture", doctorProfile.profile_picture);
