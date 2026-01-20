@@ -90,9 +90,10 @@ class PatientLoginSerializer(serializers.Serializer):
     password = serializers.CharField()
 
 class DoctorTokenObtainPairSerializer(TokenObtainPairSerializer):
-    username_field = 'email'
+    username_field = "email"
 
     def validate(self, attrs):
-        attrs['username'] = attrs.get('email') or attrs.get('username')
+        # Force JWT to accept email
+        attrs["username"] = attrs.get("email")
         return super().validate(attrs)
 

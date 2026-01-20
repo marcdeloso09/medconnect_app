@@ -90,8 +90,9 @@ export default function PhysicianAuthentication() {
     localStorage.setItem("doctorToken", res.data.access);
     navigate("/physician-dashboard");
     alert("Successfully Logged In")
-  } catch {
-    alert("Invalid Credentials");
+  } catch (error) {
+    console.log("LOGIN ERROR:", error.response?.data);
+    alert(JSON.stringify(error.response?.data, null, 2));
   }
 };
 
