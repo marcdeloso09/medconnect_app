@@ -30,7 +30,7 @@ urlpatterns = [
     path("register/", PatientRegisterView.as_view()),
     path("login/", PatientLoginView.as_view()),
     path("notifications/", PatientNotificationsView.as_view()),
-    path("same-specialty/", SameSpecialtyDoctorsView.as_view()),
+    path("doctors/same-specialty/", SameSpecialtyDoctorsView.as_view()),
     
 
 ]

@@ -73,7 +73,7 @@ export default function PatientAuthentication() {
     try {
       const res = await api.post("patients/login/", loginData);
         localStorage.setItem("patientToken", "loggedin");
-        localStorage.setItem("patientName", res.data.first_name);
+        localStorage.setItem("patientEmail", res.data.email);
         navigate("/patient-dashboard");
         alert("Successfully Logged In");
     } catch {

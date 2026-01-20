@@ -15,7 +15,8 @@ api.interceptors.request.use(config => {
   // Public routes
   if (
     config.url.includes("register") ||
-    config.url.includes("login")
+    config.url.includes("login") ||
+    config.url.includes("patients/notifications")
   ) {
     return config;
   }

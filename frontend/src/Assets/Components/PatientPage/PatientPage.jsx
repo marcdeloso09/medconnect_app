@@ -83,8 +83,8 @@ export default function PatientPage() {
 
                   {n.message.includes("I will be at") && (
                   <MapFromMessage
-                    lat={n.latitude}
-                    lng={n.longitude}
+                    latitude={n.latitude}
+                    longitude={n.longitude}
                     address={n.clinic_address}
                   />
                 )}

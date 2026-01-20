@@ -117,6 +117,10 @@ class DoctorProfileView(APIView):
             doctor.latitude = request.data.get("latitude", doctor.latitude)
             doctor.longitude = request.data.get("longitude", doctor.longitude)
             doctor.clinic_address = request.data.get("clinic_address", doctor.clinic_address)
+            doctor.specialty = request.data.get("specialty", doctor.specialty)
+            doctor.availability_date = request.data.get("availability_date", doctor.availability_date)
+            doctor.availability_time = request.data.get("availability_time", doctor.availability_time)
+
 
             if request.data.get("availability_date"):
                 doctor.availability_date = request.data.get("availability_date")
@@ -252,7 +256,6 @@ class PatientLoginView(APIView):
 class DoctorLoginView(TokenObtainPairView):
     serializer_class = DoctorTokenObtainPairSerializer
 
-
 class SameSpecialtyDoctorsView(APIView):
     permission_classes = [IsAuthenticated]
 
@@ -272,6 +275,8 @@ class SameSpecialtyDoctorsView(APIView):
         return Response(data)
 
 class PatientNotificationsView(APIView):
+    permission_classes = []
+
     def get(self, request):
         email = request.query_params.get("email")
 

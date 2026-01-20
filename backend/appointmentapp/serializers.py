@@ -90,8 +90,6 @@ class PatientLoginSerializer(serializers.Serializer):
     password = serializers.CharField()
 
 class DoctorTokenObtainPairSerializer(TokenObtainPairSerializer):
-    username_field = 'email'
-
     def validate(self, attrs):
         attrs['username'] = attrs.get('email')
         return super().validate(attrs)

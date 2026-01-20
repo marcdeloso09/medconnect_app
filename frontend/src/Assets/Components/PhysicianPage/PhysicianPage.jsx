@@ -18,7 +18,7 @@ export default function PhysicianPage() {
   const loadSameSpecialtyDoctors = async () => {
     try {
       const token = localStorage.getItem("doctorToken");
-      const res = await api.get("same-specialty/", {
+      const res = await api.get("doctors/same-specialty/", {
         headers: { Authorization: `Bearer ${token}` }
       });
       setSameSpecialtyDoctors(res.data);
@@ -480,6 +480,9 @@ const statCards = [
                                   alert("Referral sent.");
                                   setShowReferralModal(false);
                                   setSelectedDoctorId("");
+                                  setAppointments(prev =>
+                                    prev.filter(a => a.id !== selectedAppointment.id)
+                                  );
                                 } catch (err) {
                                   alert("Referral failed");
                                 }
