@@ -99,7 +99,7 @@ class DoctorProfileView(APIView):
             "symptoms": doctor.symptoms,
             "availability_date": doctor.availability_date,
             "availability_time": doctor.availability_time,
-            "profile_picture": doctor.profile_picture.build_url(secure=True) if doctor.profile_picture else None,
+            "profile_picture": doctor.profile_picture.url if doctor.profile_picture else None,
             "latitude": doctor.latitude,
             "longitude": doctor.longitude,
             "clinic_address": doctor.clinic_address,
@@ -135,7 +135,7 @@ class DoctorProfileView(APIView):
 
             return Response({
                 "message": "Profile updated successfully",
-                "profile_picture": doctor.profile_picture.build_url() if doctor.profile_picture else None
+                "profile_picture": doctor.profile_picture.url if doctor.profile_picture else None
             }, status=200)
 
         except Exception as e:
@@ -183,12 +183,13 @@ Doctor: Dr. {request.user.first_name} {request.user.last_name}
 
             Notification.objects.create(
                 patient_email=appointment.patient_email,
-                title="Appointment Accepted",
+                title="Appointment Accepted" if action == "accepted" else "Appointment Referred",
                 message=message,
                 latitude=request.user.latitude,
                 longitude=request.user.longitude,
                 clinic_address=request.user.clinic_address
             )
+
 
         elif action == "referral":
             referred_doctor_id = request.data.get("referred_doctor_id")
@@ -275,10 +276,11 @@ class SameSpecialtyDoctorsView(APIView):
         return Response(data)
 
 class PatientNotificationsView(APIView):
-    permission_classes = []
-
     def get(self, request):
         email = request.query_params.get("email")
+
+        if not email:
+            return Response({"error": "Email is required"}, status=400)
 
         notifs = Notification.objects.filter(patient_email=email).order_by("-created_at")
 
@@ -287,12 +289,12 @@ class PatientNotificationsView(APIView):
                 "title": n.title,
                 "message": n.message,
                 "created_at": n.created_at,
-                "is_read": n.is_read,
                 "latitude": n.latitude,
                 "longitude": n.longitude,
                 "clinic_address": n.clinic_address,
-            }
-            for n in notifs
+                "is_read": n.is_read
+            } for n in notifs
         ])
+
 
 

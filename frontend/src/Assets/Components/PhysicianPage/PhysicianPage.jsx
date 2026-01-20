@@ -69,7 +69,7 @@ const handleAction = async (id, action) => {
       headers: { Authorization: `Bearer ${token}` }
     });
 
-    // ✅ Update the appointment in React state immediately
+    //  Update the appointment in React state immediately
     setAppointments(prev =>
       prev.map(appt =>
         appt.id === id
@@ -78,10 +78,10 @@ const handleAction = async (id, action) => {
       )
     );
 
-    alert(`✅ Appointment ${action} and email sent to patient.`);
+    alert(`Appointment ${action} and email sent to patient.`);
   } catch (error) {
     console.error(error);
-    alert("❌ Failed to respond.");
+    alert("Failed to respond.");
   }
 };
 
@@ -269,10 +269,10 @@ const statCards = [
                         profile_picture: res.data.profile_picture
                       }));
 
-                      alert("✅ Profile updated successfully!");
+                      alert("Profile updated successfully!");
                     } catch (err) {
                       console.error(err);
-                      alert("❌ Update failed");
+                      alert(" Update failed");
                     }
                   }}
                 >
