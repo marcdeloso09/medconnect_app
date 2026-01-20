@@ -84,7 +84,7 @@ export default function PhysicianAuthentication() {
   e.preventDefault();
   try {
     const res = await api.post("doctors/login/", {
-      email: loginData.email,
+      username: loginData.email,
       password: loginData.password
     });
     localStorage.setItem("doctorToken", res.data.access);
