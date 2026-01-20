@@ -13,6 +13,9 @@ class Doctor(AbstractUser):
     availability_date = models.DateField(null=True, blank=True)
     availability_time = models.TimeField(null=True, blank=True)
     profile_picture = CloudinaryField('image', blank=True, null=True)
+    latitude = models.DecimalField(max_digits=9, decimal_places=6, null=True, blank=True)
+    longitude = models.DecimalField(max_digits=9, decimal_places=6, null=True, blank=True)
+    clinic_address = models.CharField(max_length=255, blank=True)
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
@@ -27,6 +30,7 @@ class Appointment(models.Model):
         ("pending", "Pending"),
         ("accepted", "Accepted"),
         ("rejected", "Rejected"),
+        ("referred", "Referred"),
     )
 
     doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE)
@@ -50,3 +54,13 @@ class Patient(models.Model):
 
     def __str__(self):
         return self.email
+    
+class Notification(models.Model):
+    patient_email = models.EmailField()
+    title = models.CharField(max_length=255)
+    message = models.TextField()
+    latitude = models.DecimalField(max_digits=9, decimal_places=6, null=True, blank=True)
+    longitude = models.DecimalField(max_digits=9, decimal_places=6, null=True, blank=True)
+    clinic_address = models.CharField(max_length=255, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    is_read = models.BooleanField(default=False)

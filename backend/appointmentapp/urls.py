@@ -7,9 +7,11 @@ from .views import (
     CreateAppointmentView,
     DoctorAppointmentsView,
     AppointmentActionView,
+    SameSpecialtyDoctorsView,
     PatientRegisterView,
     PatientLoginView,
-    DoctorLoginView
+    DoctorLoginView,
+    PatientNotificationsView
 )
 from rest_framework_simplejwt.views import TokenObtainPairView
 
@@ -27,4 +29,8 @@ urlpatterns = [
     # Patient routes
     path("register/", PatientRegisterView.as_view()),
     path("login/", PatientLoginView.as_view()),
+    path("notifications/", PatientNotificationsView.as_view()),
+    path("same-specialty/", SameSpecialtyDoctorsView.as_view()),
+    
+
 ]

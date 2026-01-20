@@ -4,11 +4,28 @@ import "./PhysicianPage.css";
 import api from "../../../api";
 import { formatTime12h } from "../utils/time";
 import { formatDateLong } from "../utils/time";
+import LocationPicker from "../LocationPicker";
 
 export default function PhysicianPage() {
   const navigate = useNavigate();
   const [activePage, setActivePage] = useState("overview");
   const [appointments, setAppointments] = useState([]);
+  const [showReferralModal, setShowReferralModal] = useState(false);
+  const [selectedAppointment, setSelectedAppointment] = useState(null);
+  const [sameSpecialtyDoctors, setSameSpecialtyDoctors] = useState([]);
+  const [selectedDoctorId, setSelectedDoctorId] = useState("");
+  
+  const loadSameSpecialtyDoctors = async () => {
+    try {
+      const token = localStorage.getItem("doctorToken");
+      const res = await api.get("same-specialty/", {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      setSameSpecialtyDoctors(res.data);
+    } catch (err) {
+      console.error("Failed to load doctors", err);
+    }
+  };
 
     useEffect(() => {
     const token = localStorage.getItem("doctorToken");
@@ -317,10 +334,53 @@ const statCards = [
                     value={doctorProfile.availability_time || ""}
                     onChange={e => setDoctorProfile({ ...doctorProfile, availability_time: e.target.value })}
                 />
+                <label>Clinic Address</label>
+                <input
+                  value={doctorProfile.clinic_address || ""}
+                  onChange={e => setDoctorProfile({ ...doctorProfile, clinic_address: e.target.value })}
+                />
+                              <button
+                type="button"
+                onClick={() => {
+                  navigator.geolocation.getCurrentPosition((pos) => {
+                    setDoctorProfile(prev => ({
+                      ...prev,
+                      latitude: pos.coords.latitude,
+                      longitude: pos.coords.longitude
+                    }));
+                  });
+                }}
+              >
+                Use My Current Location
+              </button>
 
+
+                <label>Latitude</label>
+                <input
+                  value={doctorProfile.latitude || ""}
+                  onChange={e => setDoctorProfile({ ...doctorProfile, latitude: e.target.value })}
+                />
+
+                <label>Longitude</label>
+                <input
+                  value={doctorProfile.longitude || ""}
+                  onChange={e => setDoctorProfile({ ...doctorProfile, longitude: e.target.value })}
+                />
                 <button type="submit" className="btn-save">
                     Save Changes
                 </button>
+                <LocationPicker
+                  lat={doctorProfile.latitude}
+                  lng={doctorProfile.longitude}
+                  onChange={(pos) =>
+                    setDoctorProfile({
+                      ...doctorProfile,
+                      latitude: pos.lat,
+                      longitude: pos.lng
+                    })
+                  }
+                />
+
                 </form>
             </section>
             )}
@@ -364,11 +424,16 @@ const statCards = [
                                 </button>
 
                                 <button
-                                    className="btn-reject"
-                                    onClick={() => handleAction(appt.id, "rejected")}
+                                  className="btn-reject"
+                                  onClick={() => {
+                                    setSelectedAppointment(appt);
+                                    loadSameSpecialtyDoctors();
+                                    setShowReferralModal(true);
+                                  }}
                                 >
-                                    Reject
+                                  Referral
                                 </button>
+
                                 </div>
                             ) : (
                                 <span className="action-done">✔ Completed</span>
@@ -378,6 +443,59 @@ const statCards = [
                         ))}
                     </tbody>
                     </table>
+                    {showReferralModal && (
+                      <div className="modal-overlay">
+                        <div className="modal-box">
+                          <h3>Refer Patient</h3>
+
+                          <select
+                            value={selectedDoctorId}
+                            onChange={(e) => setSelectedDoctorId(e.target.value)}
+                          >
+                            <option value="">Select a doctor</option>
+                            {sameSpecialtyDoctors.map(doc => (
+                              <option key={doc.id} value={doc.id}>
+                                {doc.name}
+                              </option>
+                            ))}
+                          </select>
+
+                          <div className="modal-actions">
+                            <button
+                              onClick={async () => {
+                                try {
+                                  const token = localStorage.getItem("doctorToken");
+
+                                  await api.post(
+                                    `doctors/appointments/action/${selectedAppointment.id}/`,
+                                    {
+                                      action: "referral",
+                                      referred_doctor_id: selectedDoctorId
+                                    },
+                                    {
+                                      headers: { Authorization: `Bearer ${token}` }
+                                    }
+                                  );
+
+                                  alert("Referral sent.");
+                                  setShowReferralModal(false);
+                                  setSelectedDoctorId("");
+                                } catch (err) {
+                                  alert("Referral failed");
+                                }
+                              }}
+                            >
+                              Send Referral
+                            </button>
+
+                            <button onClick={() => setShowReferralModal(false)}>
+                              Cancel
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+
                 </section>
                 )}
             <section className="notification-panel" aria-live="polite">

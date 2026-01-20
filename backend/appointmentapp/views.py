@@ -8,7 +8,7 @@ from rest_framework.permissions import IsAuthenticated
 from django.utils import timezone
 from django.core.mail import send_mail
 from rest_framework.parsers import MultiPartParser, FormParser
-from .models import Patient
+from .models import Patient, Notification
 from .serializers import PatientRegisterSerializer, PatientLoginSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
 from .serializers import DoctorTokenObtainPairSerializer
@@ -100,6 +100,9 @@ class DoctorProfileView(APIView):
             "availability_date": doctor.availability_date,
             "availability_time": doctor.availability_time,
             "profile_picture": doctor.profile_picture.build_url(secure=True) if doctor.profile_picture else None,
+            "latitude": doctor.latitude,
+            "longitude": doctor.longitude,
+            "clinic_address": doctor.clinic_address,
         })
 
     def put(self, request):
@@ -111,6 +114,9 @@ class DoctorProfileView(APIView):
             doctor.email = request.data.get("email", doctor.email)
             doctor.mild_illness = request.data.get("mild_illness", doctor.mild_illness)
             doctor.symptoms = request.data.get("symptoms", doctor.symptoms)
+            doctor.latitude = request.data.get("latitude", doctor.latitude)
+            doctor.longitude = request.data.get("longitude", doctor.longitude)
+            doctor.clinic_address = request.data.get("clinic_address", doctor.clinic_address)
 
             if request.data.get("availability_date"):
                 doctor.availability_date = request.data.get("availability_date")
@@ -157,41 +163,62 @@ class AppointmentActionView(APIView):
 
         if action == "accepted":
             appointment.status = "accepted"
+
             message = f"""
-                        Hello {appointment.patient_name},
+Hello {appointment.patient_name},
 
-                        Your appointment has been ACCEPTED.
+I have accepted your appointment.
 
-                        This is Dr. {request.user.first_name} {request.user.last_name}
+I will be at {request.user.clinic_address}.
+Please come to my office at the scheduled date and time.
 
-                        Please reply to confirm your visit.
+Doctor: Dr. {request.user.first_name} {request.user.last_name}
 
-                        - HealthConnect
-                        """
-        else:
-            appointment.status = "rejected"
+- MedConnect
+"""
+
+            Notification.objects.create(
+                patient_email=appointment.patient_email,
+                title="Appointment Accepted",
+                message=message,
+                latitude=request.user.latitude,
+                longitude=request.user.longitude,
+                clinic_address=request.user.clinic_address
+            )
+
+        elif action == "referral":
+            referred_doctor_id = request.data.get("referred_doctor_id")
+
+            try:
+                referred_doctor = Doctor.objects.get(id=referred_doctor_id)
+            except Doctor.DoesNotExist:
+                return Response({"error": "Referred doctor not found"}, status=404)
+
+            appointment.status = "referred"
+            appointment.doctor = referred_doctor
+
             message = f"""
-            Hello {appointment.patient_name},
+Hello {appointment.patient_name},
 
-            Unfortunately, your appointment has been REJECTED.
+This is Dr. {request.user.first_name} {request.user.last_name}.
 
-            Doctor: Dr. {request.user.first_name} {request.user.last_name}
+I am not able to assess you at the moment.
 
-            - HealthConnect
-            """
+I have referred your request to Dr. {referred_doctor.first_name} {referred_doctor.last_name}.
+Please wait for their confirmation.
+
+Best regards!
+"""
+
+            Notification.objects.create(
+                patient_email=appointment.patient_email,
+                title="Appointment Referred",
+                message=message
+            )
 
         appointment.save()
-
-        send_mail(
-            subject="Appointment Status Update",
-            message=message,
-            from_email=None,  # uses DEFAULT_FROM_EMAIL
-            recipient_list=[appointment.patient_email],
-            fail_silently=False
-        )
-
         return Response({"status": appointment.status})
-    
+
 class PatientRegisterView(generics.CreateAPIView):
     queryset = Patient.objects.all()
     serializer_class = PatientRegisterSerializer
@@ -224,3 +251,43 @@ class PatientLoginView(APIView):
 
 class DoctorLoginView(TokenObtainPairView):
     serializer_class = DoctorTokenObtainPairSerializer
+
+
+class SameSpecialtyDoctorsView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        specialty = request.user.specialty
+        doctors = Doctor.objects.filter(specialty=specialty).exclude(id=request.user.id)
+
+        data = [
+            {
+                "id": d.id,
+                "name": f"{d.first_name} {d.last_name}",
+                "email": d.email
+            }
+            for d in doctors
+        ]
+
+        return Response(data)
+
+class PatientNotificationsView(APIView):
+    def get(self, request):
+        email = request.query_params.get("email")
+
+        notifs = Notification.objects.filter(patient_email=email).order_by("-created_at")
+
+        return Response([
+            {
+                "title": n.title,
+                "message": n.message,
+                "created_at": n.created_at,
+                "is_read": n.is_read,
+                "latitude": n.latitude,
+                "longitude": n.longitude,
+                "clinic_address": n.clinic_address,
+            }
+            for n in notifs
+        ])
+
+
