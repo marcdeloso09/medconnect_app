@@ -12,6 +12,7 @@ from .models import Patient, Notification
 from .serializers import PatientRegisterSerializer, PatientLoginSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
 from .serializers import DoctorTokenObtainPairSerializer
+from rest_framework_simplejwt.tokens import RefreshToken
 
 class DoctorRegisterView(generics.CreateAPIView):
     queryset = Doctor.objects.all()
@@ -247,8 +248,12 @@ class PatientLoginView(APIView):
         except Patient.DoesNotExist:
             return Response({"error": "Invalid credentials"}, status=400)
 
+        refresh = RefreshToken.for_user(patient)
+
         return Response({
             "message": "Login successful",
+            "access": str(refresh.access_token),
+            "refresh": str(refresh),
             "full_name": f"{patient.first_name} {patient.last_name}",
             "email": patient.email
         })
@@ -275,7 +280,7 @@ class SameSpecialtyDoctorsView(APIView):
         return Response(data)
 
 class PatientNotificationsView(APIView):
-    permission_classes = []
+    permission_classes = [IsAuthenticated]
 
     def get(self, request):
         email = request.query_params.get("email")

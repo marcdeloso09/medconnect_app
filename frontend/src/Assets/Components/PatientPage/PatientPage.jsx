@@ -28,7 +28,7 @@ export default function PatientPage() {
   api.get(`patients/notifications/?email=${email}`)
   .then(res => setNotifications(res.data))
   .catch(err => console.error("Notification fetch failed:", err));
-}, [activeTab]);
+}, [activeTab, email]);
 
   return (
     <div className="patient-dashboard">
