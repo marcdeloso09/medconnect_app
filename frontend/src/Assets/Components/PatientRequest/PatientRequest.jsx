@@ -31,8 +31,8 @@ export default function PatientRequest() {
   const [showAppointmentForm, setShowAppointmentForm] = useState(false);
   const [duration, setDuration] = useState("");
   const [appointmentData, setAppointmentData] = useState({
-    full_name: "",
-    email: "",
+    full_name: localStorage.getItem("patientName") || "",
+    email: localStorage.getItem("patientEmail") || "",
     date: "",
     time: ""
   });

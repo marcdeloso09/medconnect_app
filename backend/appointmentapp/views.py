@@ -268,7 +268,7 @@ class PatientLoginView(APIView):
             "message": "Login successful",
             "access": tokens["access"],
             "refresh": tokens["refresh"],
-            "full_name": f"{patient.first_name} {patient.last_name}",
+            "full_name": f"{patient.first_name or ''} {patient.last_name or ''}".strip(),
             "email": patient.email
         })
 
