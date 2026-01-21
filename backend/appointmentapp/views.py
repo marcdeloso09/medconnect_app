@@ -180,15 +180,15 @@ Doctor: Dr. {request.user.first_name} {request.user.last_name}
 
 - MedConnect
 """
-
             Notification.objects.create(
                 patient_email=appointment.patient_email,
-                title="Appointment Accepted" if action == "accepted" else "Appointment Referred",
-                message=message,
+                title="Appointment Accepted",
+                message=f"Dr. {request.user.first_name} {request.user.last_name} has accepted your appointment.\nI will be at {request.user.clinic_address}",
                 latitude=request.user.latitude,
                 longitude=request.user.longitude,
                 clinic_address=request.user.clinic_address
             )
+
 
 
         elif action == "referral":
@@ -214,14 +214,10 @@ Please wait for their confirmation.
 
 Best regards!
 """
-
             Notification.objects.create(
                 patient_email=appointment.patient_email,
-                title="Appointment Accepted" if action == "accepted" else "Appointment Referred",
-                message=message,
-                latitude=request.user.latitude,
-                longitude=request.user.longitude,
-                clinic_address=request.user.clinic_address
+                title="Appointment Referred",
+                message=f"Your appointment has been referred to another doctor.",
             )
 
         appointment.save()
@@ -298,6 +294,7 @@ class PatientNotificationsView(APIView):
                 "is_read": n.is_read
             } for n in notifs
         ])
+
 
 
 

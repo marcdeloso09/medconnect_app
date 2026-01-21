@@ -15,8 +15,8 @@ export default function PatientPage() {
   const patientName = localStorage.getItem("patientName") || "Patient";
   const email = localStorage.getItem("patientEmail");
   const handleLogout = () => {
-    localStorage.removeItem("patientToken");
-    localStorage.removeItem("patientName");
+    localStorage.setItem("patientName", res.data.name);
+    localStorage.setItem("patientEmail", res.data.email);
     navigate("/");
   };
 
