@@ -217,8 +217,11 @@ Best regards!
 
             Notification.objects.create(
                 patient_email=appointment.patient_email,
-                title="Appointment Referred",
-                message=message
+                title="Appointment Accepted" if action == "accepted" else "Appointment Referred",
+                message=message,
+                latitude=request.user.latitude,
+                longitude=request.user.longitude,
+                clinic_address=request.user.clinic_address
             )
 
         appointment.save()
