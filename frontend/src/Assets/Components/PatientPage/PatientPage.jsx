@@ -27,16 +27,18 @@ export default function PatientPage() {
 
   useEffect(() => {
   if (activeTab !== "notifications") return;
-  if (!email) return;
+
+  const token = localStorage.getItem("patientToken");
+  if (!token) return;
 
   api.get("patients/notifications/", {
     headers: {
-      Authorization: `Bearer ${localStorage.getItem("patientToken")}`
+      Authorization: `Bearer ${token}`
     }
   })
     .then(res => setNotifications(res.data))
     .catch(err => console.error("Notification fetch failed:", err));
-}, [activeTab, email]);
+}, [activeTab]);
 
   return (
     <div className="patient-dashboard">

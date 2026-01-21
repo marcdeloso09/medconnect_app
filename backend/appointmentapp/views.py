@@ -12,7 +12,7 @@ from .models import Patient, Notification
 from .serializers import PatientRegisterSerializer, PatientLoginSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
 from .serializers import DoctorTokenObtainPairSerializer
-from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework_simplejwt.tokens import RefreshToken, AccessToken
 from django.conf import settings
 from .permissions import IsAuthenticatedPatient
 
@@ -238,10 +238,11 @@ class PatientRegisterView(generics.CreateAPIView):
             raise
 
 def get_tokens_for_patient(patient):
-    refresh = RefreshToken()
+    refresh = RefreshToken.for_user(patient)
+    refresh["type"] = "patient"
     refresh["patient_id"] = patient.id
     refresh["email"] = patient.email
-    refresh["type"] = "patient"
+
     return {
         "refresh": str(refresh),
         "access": str(refresh.access_token),
@@ -271,6 +272,7 @@ class PatientLoginView(APIView):
             "full_name": f"{patient.first_name or ''} {patient.last_name or ''}".strip(),
             "email": patient.email
         })
+
 
 class DoctorLoginView(TokenObtainPairView):
     serializer_class = DoctorTokenObtainPairSerializer

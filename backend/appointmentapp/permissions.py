@@ -11,7 +11,6 @@ class IsAuthenticatedPatient(BasePermission):
 
             user, token = validated
 
-            # Token must be patient token
             if token.get("type") != "patient":
                 return False
 
