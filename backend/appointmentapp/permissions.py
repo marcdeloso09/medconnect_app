@@ -1,6 +1,5 @@
 from rest_framework.permissions import BasePermission
 from rest_framework_simplejwt.authentication import JWTAuthentication
-from .models import Patient
 
 class IsAuthenticatedPatient(BasePermission):
     def has_permission(self, request, view):
@@ -11,10 +10,14 @@ class IsAuthenticatedPatient(BasePermission):
                 return False
 
             user, token = validated
+
+            # Token must be patient token
             if token.get("type") != "patient":
                 return False
 
             request.patient_id = token.get("patient_id")
             return True
-        except Exception:
+
+        except Exception as e:
+            print("PATIENT AUTH ERROR:", e)
             return False
