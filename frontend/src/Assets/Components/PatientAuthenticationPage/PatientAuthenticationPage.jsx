@@ -77,9 +77,9 @@ export default function PatientAuthentication() {
       localStorage.setItem("patientName", res.data.full_name);
       localStorage.setItem("patientEmail", res.data.email);
 
-      navigate("/patient-dashboard");
-    } catch {
-      alert("Invalid Credentials");
+      navigate("/patient-dashboard", { replace: true });
+    } catch (err) {
+      alert("Invalid credentials");
     }
   };
 

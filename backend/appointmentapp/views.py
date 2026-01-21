@@ -13,6 +13,8 @@ from .serializers import PatientRegisterSerializer, PatientLoginSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
 from .serializers import DoctorTokenObtainPairSerializer
 from rest_framework_simplejwt.tokens import RefreshToken
+from django.conf import settings
+from .permissions import IsAuthenticatedPatient
 
 class DoctorRegisterView(generics.CreateAPIView):
     queryset = Doctor.objects.all()
@@ -235,32 +237,40 @@ class PatientRegisterView(generics.CreateAPIView):
             print("🔥 PATIENT REGISTER ERROR:", str(e))
             raise
 
-from rest_framework_simplejwt.tokens import AccessToken
+def get_tokens_for_patient(patient):
+    refresh = RefreshToken()
+    refresh["patient_id"] = patient.id
+    refresh["email"] = patient.email
+    refresh["type"] = "patient"
+    return {
+        "refresh": str(refresh),
+        "access": str(refresh.access_token),
+    }
 
 class PatientLoginView(APIView):
+    permission_classes = []
+
     def post(self, request):
         serializer = PatientLoginSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
 
-        email = serializer.validated_data['email']
-        password = serializer.validated_data['password']
+        email = serializer.validated_data["email"]
+        password = serializer.validated_data["password"]
 
         try:
             patient = Patient.objects.get(email=email, password=password)
         except Patient.DoesNotExist:
             return Response({"error": "Invalid credentials"}, status=400)
 
-        token = AccessToken()
-        token['email'] = patient.email
-        token['role'] = 'patient'
+        tokens = get_tokens_for_patient(patient)
 
         return Response({
             "message": "Login successful",
-            "access": str(token),
+            "access": tokens["access"],
+            "refresh": tokens["refresh"],
             "full_name": f"{patient.first_name} {patient.last_name}",
             "email": patient.email
         })
-
 
 class DoctorLoginView(TokenObtainPairView):
     serializer_class = DoctorTokenObtainPairSerializer
@@ -284,18 +294,13 @@ class SameSpecialtyDoctorsView(APIView):
         return Response(data)
 
 class PatientNotificationsView(APIView):
-    permission_classes = []
+    permission_classes = [IsAuthenticatedPatient]
 
     def get(self, request):
-        email = request.query_params.get("email")
+        patient_id = request.patient_id
+        patient = Patient.objects.get(id=patient_id)
 
-        if not email:
-            return Response({"error": "Email is required"}, status=400)
-
-        notifs = Notification.objects.filter(
-            patient_email__iexact=email
-        ).order_by("-created_at")
-
+        notifs = Notification.objects.filter(patient_email=patient.email).order_by("-created_at")
 
         return Response([
             {

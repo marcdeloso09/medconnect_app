@@ -26,7 +26,7 @@ export default function PatientPage() {
   if (activeTab !== "notifications") return;
   if (!email) return;
 
-  api.get(`patients/notifications/?email=${email}`)
+  api.get("patients/notifications/")
     .then(res => setNotifications(res.data))
     .catch(err => console.error("Notification fetch failed:", err));
 }, [activeTab, email]);
