@@ -2,7 +2,7 @@ import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 
 export default function MapFromMessage({ lat, lng, address }) {
-  if (!lat || !lng) return null;
+  if (lat == null || lng == null) return null;
 
   return (
     <div className="notif-map">

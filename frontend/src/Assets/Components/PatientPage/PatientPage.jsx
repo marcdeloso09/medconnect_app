@@ -12,7 +12,7 @@ export default function PatientPage() {
   const [showMenu, setShowMenu] = useState(false);
   const [notifications, setNotifications] = useState([]);
   const unreadCount = notifications.filter(n => !n.is_read).length;
-  const patientName = localStorage.getItem("patientName") || "Patient";
+  const patientName = localStorage.getItem("patientName") ?? "Patient";
   const email = localStorage.getItem("patientEmail");
   const handleLogout = () => {
     localStorage.removeItem("patientToken");
@@ -25,9 +25,10 @@ export default function PatientPage() {
   useEffect(() => {
   if (activeTab !== "notifications") return;
   if (!email) return;
+
   api.get(`patients/notifications/?email=${email}`)
-  .then(res => setNotifications(res.data))
-  .catch(err => console.error("Notification fetch failed:", err));
+    .then(res => setNotifications(res.data))
+    .catch(err => console.error("Notification fetch failed:", err));
 }, [activeTab, email]);
 
   return (
@@ -83,11 +84,11 @@ export default function PatientPage() {
 
                   {n.message.includes("I will be at") && (
                   <MapFromMessage
-                    latitude={n.latitude}
-                    longitude={n.longitude}
+                    lat={n.latitude}
+                    lng={n.longitude}
                     address={n.clinic_address}
                   />
-                )}
+                  )}
 
                 </div>
               ))

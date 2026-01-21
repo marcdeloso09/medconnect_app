@@ -235,6 +235,8 @@ class PatientRegisterView(generics.CreateAPIView):
             print("🔥 PATIENT REGISTER ERROR:", str(e))
             raise
 
+from rest_framework_simplejwt.tokens import AccessToken
+
 class PatientLoginView(APIView):
     def post(self, request):
         serializer = PatientLoginSerializer(data=request.data)
@@ -248,15 +250,17 @@ class PatientLoginView(APIView):
         except Patient.DoesNotExist:
             return Response({"error": "Invalid credentials"}, status=400)
 
-        refresh = RefreshToken.for_user(patient)
+        token = AccessToken()
+        token['email'] = patient.email
+        token['role'] = 'patient'
 
         return Response({
             "message": "Login successful",
-            "access": str(refresh.access_token),
-            "refresh": str(refresh),
+            "access": str(token),
             "full_name": f"{patient.first_name} {patient.last_name}",
             "email": patient.email
         })
+
 
 class DoctorLoginView(TokenObtainPairView):
     serializer_class = DoctorTokenObtainPairSerializer
@@ -280,7 +284,7 @@ class SameSpecialtyDoctorsView(APIView):
         return Response(data)
 
 class PatientNotificationsView(APIView):
-    permission_classes = [IsAuthenticated]
+    permission_classes = []
 
     def get(self, request):
         email = request.query_params.get("email")
@@ -288,7 +292,10 @@ class PatientNotificationsView(APIView):
         if not email:
             return Response({"error": "Email is required"}, status=400)
 
-        notifs = Notification.objects.filter(patient_email=email).order_by("-created_at")
+        notifs = Notification.objects.filter(
+            patient_email__iexact=email
+        ).order_by("-created_at")
+
 
         return Response([
             {
