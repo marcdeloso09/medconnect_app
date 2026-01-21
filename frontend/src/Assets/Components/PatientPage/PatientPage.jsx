@@ -17,17 +17,17 @@ export default function PatientPage() {
   const handleLogout = () => {
     localStorage.removeItem("patientToken");
     localStorage.removeItem("patientName");
+    localStorage.removeItem("patientEmail");
     navigate("/");
   };
 
+
   useEffect(() => {
   if (activeTab !== "notifications") return;
-
-  const token = localStorage.getItem("patientToken");
-
-  api.get(`patients/notifications/?email=${email}`, {
-    headers: { Authorization: `Bearer ${token}` }
-  }).then(res => setNotifications(res.data));
+  if (!email) return;
+  api.get(`patients/notifications/?email=${email}`)
+  .then(res => setNotifications(res.data))
+  .catch(err => console.error("Notification fetch failed:", err));
 }, [activeTab]);
 
   return (

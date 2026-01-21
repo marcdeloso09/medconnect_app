@@ -374,14 +374,14 @@ export default function PatientRequest() {
                       appointment_time: appointmentData.time
                     });
 
-                    alert("✅ Appointment request sent!");
+                    alert(" Appointment request sent!");
                     setShowAppointmentForm(false);
                   } catch (error) {
                     console.error(error);
-                    alert("❌ Failed to book appointment");
+                    alert(" Failed to book appointment");
                   }
                 }}>
-                ✅ Book Dr. {selectedDoctor.first_name} Now
+                 Book Dr. {selectedDoctor.first_name} Now
                 </button>
               </div>
             )}

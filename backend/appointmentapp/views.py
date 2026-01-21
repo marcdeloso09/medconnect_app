@@ -249,7 +249,7 @@ class PatientLoginView(APIView):
 
         return Response({
             "message": "Login successful",
-            "first_name": patient.first_name,
+            "full_name": f"{patient.first_name} {patient.last_name}",
             "email": patient.email
         })
 
@@ -275,6 +275,8 @@ class SameSpecialtyDoctorsView(APIView):
         return Response(data)
 
 class PatientNotificationsView(APIView):
+    permission_classes = []
+
     def get(self, request):
         email = request.query_params.get("email")
 

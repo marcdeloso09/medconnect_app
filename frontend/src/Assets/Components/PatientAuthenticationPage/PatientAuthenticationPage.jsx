@@ -49,7 +49,7 @@ export default function PatientAuthentication() {
       const res = await api.post("patients/register/", payload);
 
       if (res.status === 201 || res.status === 200) {
-        localStorage.setItem("patientName", formData.first_name);
+        localStorage.setItem("patientName", `${formData.first_name} ${formData.last_name}`);
         alert("Patient Registered Successfully");
         setIsLogin(true);
       }
@@ -72,8 +72,7 @@ export default function PatientAuthentication() {
     e.preventDefault();
     try {
       const res = await api.post("patients/login/", loginData);
-        localStorage.setItem("patientToken", res.data.token);
-        localStorage.setItem("patientName", res.data.name);
+        localStorage.setItem("patientName", res.data.full_name);
         localStorage.setItem("patientEmail", res.data.email);
         navigate("/patient-dashboard");
         alert("Successfully Logged In");
