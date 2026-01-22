@@ -273,7 +273,6 @@ class PatientLoginView(APIView):
             "email": patient.email
         })
 
-
 class DoctorLoginView(TokenObtainPairView):
     serializer_class = DoctorTokenObtainPairSerializer
 

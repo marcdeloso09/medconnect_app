@@ -10,10 +10,16 @@ const api = axios.create({
 });
 
 api.interceptors.request.use(config => {
-  const token =
-  localStorage.getItem("doctorToken") ||
-  localStorage.getItem("patientToken");
+  const isDoctorRoute = config.url.includes("doctors");
+  const isPatientRoute = config.url.includes("patients");
 
+  let token = null;
+
+  if (isDoctorRoute) {
+    token = localStorage.getItem("doctorToken");
+  } else if (isPatientRoute) {
+    token = localStorage.getItem("patientToken");
+  }
 
   // Public routes
   if (

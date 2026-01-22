@@ -12,10 +12,7 @@ export default function PatientPage() {
   const [showMenu, setShowMenu] = useState(false);
   const [notifications, setNotifications] = useState([]);
   const unreadCount = notifications.filter(n => !n.is_read).length;
-  const patientName =
-    localStorage.getItem("patientName") ||
-    localStorage.getItem("patientEmail") ||
-    "Patient";
+  const [patientName, setPatientName] = useState("Patient");
   const email = localStorage.getItem("patientEmail");
   const handleLogout = () => {
     localStorage.removeItem("patientToken");
@@ -23,7 +20,13 @@ export default function PatientPage() {
     localStorage.removeItem("patientEmail");
     navigate("/");
   };
-
+  useEffect(() => {
+    const name =
+      localStorage.getItem("patientName") ||
+      localStorage.getItem("patientEmail") ||
+      "Patient";
+    setPatientName(name);
+  }, []);
 
   useEffect(() => {
   if (activeTab !== "notifications") return;
@@ -31,11 +34,7 @@ export default function PatientPage() {
   const token = localStorage.getItem("patientToken");
   if (!token) return;
 
-  api.get("patients/notifications/", {
-    headers: {
-      Authorization: `Bearer ${token}`
-    }
-  })
+  api.get("patients/notifications/")
     .then(res => setNotifications(res.data))
     .catch(err => console.error("Notification fetch failed:", err));
 }, [activeTab]);
