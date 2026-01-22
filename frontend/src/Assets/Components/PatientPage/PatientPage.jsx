@@ -40,6 +40,14 @@ export default function PatientPage() {
     .catch(err => console.error("Notification fetch failed:", err));
 }, [activeTab]);
 
+  useEffect(() => {
+    if (selectedNotif) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
+    }
+  }, [selectedNotif]);
+
   return (
     <div className="patient-dashboard">
       {/* Header */}
@@ -126,13 +134,14 @@ export default function PatientPage() {
             <small>{new Date(selectedNotif.created_at).toLocaleString()}</small>
 
             {selectedNotif.message.includes("I will be at") && (
-              <MapFromMessage
-                lat={selectedNotif.latitude}
-                lng={selectedNotif.longitude}
-                address={selectedNotif.clinic_address}
-              />
+              <div style={{ height: "250px", marginTop: "15px", borderRadius: "10px", overflow: "hidden" }}>
+                <MapFromMessage
+                  lat={selectedNotif.latitude}
+                  lng={selectedNotif.longitude}
+                  address={selectedNotif.clinic_address}
+                />
+              </div>
             )}
-
             <button className="close-btn" onClick={() => setSelectedNotif(null)}>
               Close
             </button>

@@ -127,31 +127,32 @@
   margin-top: 6px;
 }
 
-/* Modal */
-
 .notif-modal-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,0.45);
+  background: rgba(0, 0, 0, 0.6);
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 1000;
+  z-index: 9999;
+  padding: 20px;
 }
 
 .notif-modal {
   background: white;
-  padding: 25px;
-  border-radius: 12px;
-  width: 90%;
-  max-width: 500px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-  animation: popIn 0.2s ease;
+  width: 100%;
+  max-width: 520px;
+  max-height: 85vh;
+  overflow-y: auto;
+  border-radius: 14px;
+  padding: 24px;
+  box-shadow: 0 25px 60px rgba(0,0,0,0.25);
+  animation: modalPop 0.2s ease;
 }
 
-@keyframes popIn {
+@keyframes modalPop {
   from {
-    transform: scale(0.95);
+    transform: scale(0.92);
     opacity: 0;
   }
   to {
@@ -160,12 +161,24 @@
   }
 }
 
+.notif-modal h3 {
+  margin-top: 0;
+}
+
+.notif-modal small {
+  display: block;
+  margin-bottom: 12px;
+  color: #666;
+}
+
 .close-btn {
-  margin-top: 15px;
+  margin-top: 20px;
   background: #2563eb;
   color: white;
   border: none;
-  padding: 10px 16px;
+  padding: 10px 18px;
   border-radius: 8px;
   cursor: pointer;
+  width: 100%;
 }
+
