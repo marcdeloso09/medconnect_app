@@ -147,7 +147,7 @@ const statCards = [
         <div className="brand">
           <div className="brand-logo">HC</div>
           <div className="brand-text">
-            <h2>HealthConnect</h2>
+            <h2>MedAppoint</h2>
             <small>Doctor Portal</small>
           </div>
         </div>

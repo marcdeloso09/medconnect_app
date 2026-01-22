@@ -91,7 +91,7 @@ export default function PatientAuthentication() {
           <img src={stethoscope} alt="Logo" className="logo-img" />
         </div>
         <div className="title-box">
-          <h1>Med Connect</h1>
+          <h1>Med Appoint</h1>
           <p>Patient Authentication</p>
         </div>
       </div>

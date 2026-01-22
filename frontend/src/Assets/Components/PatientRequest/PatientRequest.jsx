@@ -148,8 +148,8 @@ export default function PatientRequest() {
           <img src={stethoscope} alt="Stethoscope Logo" className="logo-img" />
         </div>
         <div className="title-box">
-          <h1>Med Connect</h1>
-          <p>AI Medical Platform</p>
+          <h1>Med Appoint</h1>
+          <p>AI Medical Appointment Platform</p>
         </div>
       </div>
 

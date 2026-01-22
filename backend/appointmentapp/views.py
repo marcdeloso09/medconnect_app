@@ -176,8 +176,9 @@ class AppointmentActionView(APIView):
                 patient_email=appointment.patient_email,
                 title="Appointment Accepted",
                 message=(
-                    f"Dr. {request.user.first_name} {request.user.last_name} has accepted your appointment.\n"
-                    f"I will be at {request.user.clinic_address}"
+                    f"Hello and Good Day! This is Dr. {request.user.first_name} {request.user.last_name} and I have accepted your appointment.\n"
+                    f"Please come to my office at the exact time of my schedule.\n"
+                    f"\nI will be at {request.user.clinic_address}"
                 ),
                 latitude=request.user.latitude,
                 longitude=request.user.longitude,

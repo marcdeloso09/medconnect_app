@@ -52,7 +52,7 @@ export default function PatientPage() {
     <div className="patient-dashboard">
       {/* Header */}
       <div className="dashboard-header">
-        <h2>Med Connect</h2>
+        <h2>Med Appoint</h2>
 
         <div className="profile-section">
           <span onClick={() => setShowMenu(!showMenu)} className="profile-name">
