@@ -451,61 +451,63 @@ const statCards = [
                     </tbody>
                     </table>
                     {showReferralModal && (
-                      <div className="modal-overlay">
-                        <div className="modal-box">
-                          <h3>Refer Patient</h3>
+                    <div className="modal-overlay">
+                      <div className="modal-box">
+                        <h3>Refer Patient</h3>
 
-                          <select
-                            value={selectedDoctorId}
-                            onChange={(e) => setSelectedDoctorId(e.target.value)}
+                        <select
+                          value={selectedDoctorId}
+                          onChange={(e) => setSelectedDoctorId(e.target.value)}
+                        >
+                          <option value="">Select a doctor</option>
+                          {sameSpecialtyDoctors.map(doc => (
+                            <option key={doc.id} value={doc.id}>
+                              {doc.name}
+                            </option>
+                          ))}
+                        </select>
+
+                        <div className="modal-actions">
+                          <button
+                            onClick={async () => {
+                              if (!selectedDoctorId) {
+                                alert("Please select a doctor.");
+                                return;
+                              }
+
+                              try {
+                                const token = localStorage.getItem("doctorToken");
+
+                                await api.post(
+                                  `doctors/appointments/action/${selectedAppointment.id}/`,
+                                  {
+                                    action: "referral",
+                                    referred_doctor_id: selectedDoctorId
+                                  },
+                                  {
+                                    headers: { Authorization: `Bearer ${token}` }
+                                  }
+                                );
+
+                                alert("Referral sent.");
+                                setShowReferralModal(false);
+                                setSelectedDoctorId("");
+                              } catch (err) {
+                                console.error(err);
+                                alert("Referral failed");
+                              }
+                            }}
                           >
-                            <option value="">Select a doctor</option>
-                            {sameSpecialtyDoctors.map(doc => (
-                              <option key={doc.id} value={doc.id}>
-                                {doc.name}
-                              </option>
-                            ))}
-                          </select>
+                            Send Referral
+                          </button>
 
-                          <div className="modal-actions">
-                            <button
-                              onClick={async () => {
-                                try {
-                                  const token = localStorage.getItem("doctorToken");
-
-                                  await api.post(
-                                    `doctors/appointments/action/${selectedAppointment.id}/`,
-                                    {
-                                      action: "referral",
-                                      referred_doctor_id: selectedDoctorId
-                                    },
-                                    {
-                                      headers: { Authorization: `Bearer ${token}` }
-                                    }
-                                  );
-
-                                  alert("Referral sent.");
-                                  setShowReferralModal(false);
-                                  setSelectedDoctorId("");
-                                  setAppointments(prev =>
-                                    prev.filter(a => a.id !== selectedAppointment.id)
-                                  );
-                                } catch (err) {
-                                  alert("Referral failed");
-                                }
-                              }}
-                            >
-                              Send Referral
-                            </button>
-
-                            <button onClick={() => setShowReferralModal(false)}>
-                              Cancel
-                            </button>
-                          </div>
+                          <button onClick={() => setShowReferralModal(false)}>
+                            Cancel
+                          </button>
                         </div>
                       </div>
-                    )}
-
+                    </div>
+                  )}
                 </section>
                 )}
             <section className="notification-panel" aria-live="polite">
