@@ -103,7 +103,7 @@ export default function PatientRequest() {
         symptoms: symptom
         // optionally add availability_date/time
       };
-      const res = await api.get("doctors/", { params });
+      const res = await api.get("", { params });
       setDoctors(res.data || []);
       // Note: do not set showDoctors here — handled by caller
       setMessages(prev => [...prev, { from: "ai", text: `Found ${res.data?.length || 0} matching doctor(s).` }]);
