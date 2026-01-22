@@ -170,61 +170,68 @@ class AppointmentActionView(APIView):
 
         if action == "accepted":
             appointment.status = "accepted"
+            appointment.save()
 
-            message = f"""
-Hello {appointment.patient_name},
-
-I have accepted your appointment.
-
-I will be at {request.user.clinic_address}.
-Please come to my office at the scheduled date and time.
-
-Doctor: Dr. {request.user.first_name} {request.user.last_name}
-
-- MedConnect
-"""
             Notification.objects.create(
                 patient_email=appointment.patient_email,
                 title="Appointment Accepted",
-                message=f"Dr. {request.user.first_name} {request.user.last_name} has accepted your appointment.\nI will be at {request.user.clinic_address}",
+                message=(
+                    f"Dr. {request.user.first_name} {request.user.last_name} "
+                    f"has accepted your appointment.\n"
+                    f"I will be at {request.user.clinic_address}"
+                ),
                 latitude=request.user.latitude,
                 longitude=request.user.longitude,
                 clinic_address=request.user.clinic_address
             )
 
-
+            return Response({"status": "accepted"})
 
         elif action == "referral":
             referred_doctor_id = request.data.get("referred_doctor_id")
+
+            if not referred_doctor_id:
+                return Response({"error": "referred_doctor_id is required"}, status=400)
 
             try:
                 referred_doctor = Doctor.objects.get(id=referred_doctor_id)
             except Doctor.DoesNotExist:
                 return Response({"error": "Referred doctor not found"}, status=404)
 
+            # Mark original as referred
             appointment.status = "referred"
-            appointment.doctor = referred_doctor
+            appointment.save()
 
-            message = f"""
-Hello {appointment.patient_name},
+            # Clone appointment for new doctor
+            new_appt = Appointment.objects.create(
+                doctor=referred_doctor,
+                patient_name=appointment.patient_name,
+                patient_email=appointment.patient_email,
+                mild_illness=appointment.mild_illness,
+                symptoms=appointment.symptoms,
+                appointment_date=appointment.appointment_date,
+                appointment_time=appointment.appointment_time,
+                status="pending"
+            )
 
-This is Dr. {request.user.first_name} {request.user.last_name}.
-
-I am not able to assess you at the moment.
-
-I have referred your request to Dr. {referred_doctor.first_name} {referred_doctor.last_name}.
-Please wait for their confirmation.
-
-Best regards!
-"""
+            # Notify patient
             Notification.objects.create(
                 patient_email=appointment.patient_email,
                 title="Appointment Referred",
-                message=f"Your appointment has been referred to another doctor.",
+                message=(
+                    f"Dr. {request.user.first_name} {request.user.last_name} "
+                    f"has referred your appointment to "
+                    f"Dr. {referred_doctor.first_name} {referred_doctor.last_name}. "
+                    f"Please wait for confirmation."
+                ),
             )
 
-        appointment.save()
-        return Response({"status": appointment.status})
+            return Response({
+                "status": "referred",
+                "new_appointment_id": new_appt.id
+            })
+
+        return Response({"error": "Invalid action"}, status=400)
 
 class PatientRegisterView(generics.CreateAPIView):
     queryset = Patient.objects.all()

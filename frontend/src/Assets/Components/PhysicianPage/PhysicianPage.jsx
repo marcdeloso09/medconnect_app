@@ -434,6 +434,7 @@ const statCards = [
                                   className="btn-reject"
                                   onClick={() => {
                                     setSelectedAppointment(appt);
+                                    setSelectedDoctorId(""); // reset
                                     loadSameSpecialtyDoctors();
                                     setShowReferralModal(true);
                                   }}
@@ -477,23 +478,22 @@ const statCards = [
                               try {
                                 const token = localStorage.getItem("doctorToken");
 
-                                await api.post(
-                                  `doctors/appointments/action/${selectedAppointment.id}/`,
-                                  {
-                                    action: "referral",
-                                    referred_doctor_id: selectedDoctorId
-                                  },
-                                  {
-                                    headers: { Authorization: `Bearer ${token}` }
-                                  }
-                                );
-                                setAppointments(prev =>
-                                  prev.map(a =>
-                                    a.id === selectedAppointment.id
-                                      ? { ...a, status: "referred" }
-                                      : a
-                                  )
-                                );
+                                const res = await api.post(
+                                        `doctors/appointments/action/${selectedAppointment.id}/`,
+                                        {
+                                          action: "referral",
+                                          referred_doctor_id: selectedDoctorId
+                                        },
+                                        {
+                                          headers: { Authorization: `Bearer ${token}` }
+                                        }
+                                      );
+
+                                      // Remove from current doctor list
+                                      setAppointments(prev =>
+                                        prev.filter(a => a.id !== selectedAppointment.id)
+                                      );
+
                                 alert("Referral sent.");
                                 setShowReferralModal(false);
                                 setSelectedDoctorId("");
