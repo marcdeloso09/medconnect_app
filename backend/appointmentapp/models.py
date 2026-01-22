@@ -59,11 +59,14 @@ class Notification(models.Model):
     patient_email = models.EmailField()
     title = models.CharField(max_length=255)
     message = models.TextField()
+
     latitude = models.FloatField(null=True, blank=True)
     longitude = models.FloatField(null=True, blank=True)
-    clinic_address = models.CharField(max_length=255, null=True, blank=True)
+    clinic_address = models.TextField(null=True, blank=True)
+
     is_read = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
+
 
     def __str__(self):
         return self.title
