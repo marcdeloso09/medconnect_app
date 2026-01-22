@@ -162,7 +162,7 @@ class AppointmentActionView(APIView):
 
     def post(self, request, pk):
         try:
-            appointment = Appointment.objects.get(pk=pk, doctor=request.user)
+            appointment = Appointment.objects.get(pk=pk)
         except Appointment.DoesNotExist:
             return Response({"error": "Appointment not found"}, status=404)
 
@@ -176,8 +176,7 @@ class AppointmentActionView(APIView):
                 patient_email=appointment.patient_email,
                 title="Appointment Accepted",
                 message=(
-                    f"Dr. {request.user.first_name} {request.user.last_name} "
-                    f"has accepted your appointment.\n"
+                    f"Dr. {request.user.first_name} {request.user.last_name} has accepted your appointment.\n"
                     f"I will be at {request.user.clinic_address}"
                 ),
                 latitude=request.user.latitude,
@@ -198,11 +197,11 @@ class AppointmentActionView(APIView):
             except Doctor.DoesNotExist:
                 return Response({"error": "Referred doctor not found"}, status=404)
 
-            # Mark original as referred
+            # Mark original appointment as referred
             appointment.status = "referred"
             appointment.save()
 
-            # Clone appointment for new doctor
+            # Create new appointment for referred doctor
             new_appt = Appointment.objects.create(
                 doctor=referred_doctor,
                 patient_name=appointment.patient_name,
@@ -214,7 +213,7 @@ class AppointmentActionView(APIView):
                 status="pending"
             )
 
-            # Notify patient
+            # Notification WITHOUT location
             Notification.objects.create(
                 patient_email=appointment.patient_email,
                 title="Appointment Referred",
@@ -222,8 +221,8 @@ class AppointmentActionView(APIView):
                     f"Dr. {request.user.first_name} {request.user.last_name} "
                     f"has referred your appointment to "
                     f"Dr. {referred_doctor.first_name} {referred_doctor.last_name}. "
-                    f"Please wait for confirmation."
-                ),
+                    f"Please wait for their confirmation."
+                )
             )
 
             return Response({
