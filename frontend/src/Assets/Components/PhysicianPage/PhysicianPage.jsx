@@ -440,7 +440,6 @@ const statCards = [
                                 >
                                   Referral
                                 </button>
-
                                 </div>
                             ) : (
                                 <span className="action-done">✔ Completed</span>
@@ -488,7 +487,13 @@ const statCards = [
                                     headers: { Authorization: `Bearer ${token}` }
                                   }
                                 );
-
+                                setAppointments(prev =>
+                                  prev.map(a =>
+                                    a.id === selectedAppointment.id
+                                      ? { ...a, status: "referred" }
+                                      : a
+                                  )
+                                );
                                 alert("Referral sent.");
                                 setShowReferralModal(false);
                                 setSelectedDoctorId("");
