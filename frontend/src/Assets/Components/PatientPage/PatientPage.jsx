@@ -11,6 +11,7 @@ export default function PatientPage() {
   const [activeTab, setActiveTab] = useState("ai");
   const [showMenu, setShowMenu] = useState(false);
   const [notifications, setNotifications] = useState([]);
+  const [selectedNotif, setSelectedNotif] = useState(null);
   const unreadCount = notifications.filter(n => !n.is_read).length;
   const [patientName, setPatientName] = useState("Patient");
   const email = localStorage.getItem("patientEmail");
@@ -79,31 +80,65 @@ export default function PatientPage() {
       {/* Content */}
       <div className="dashboard-content">
         {activeTab === "ai" && <PatientRequest />}
+
         {activeTab === "notifications" && (
           <div className="notifications-panel">
             {notifications.length === 0 ? (
               <h3>No notifications yet</h3>
             ) : (
-              notifications.map((n, i) => (
-                <div key={i} className="notif-card">
-                  <h4>{n.title}</h4>
-                  <p style={{ whiteSpace: "pre-line" }}>{n.message}</p>
-                  <small>{new Date(n.created_at).toLocaleString()}</small>
+              notifications.map((n, i) => {
+                const type =
+                  n.title.toLowerCase().includes("accepted") ? "accepted" :
+                  n.title.toLowerCase().includes("referred") ? "referred" :
+                  "info";
 
-                  {n.message.includes("I will be at") && (
-                  <MapFromMessage
-                    lat={n.latitude}
-                    lng={n.longitude}
-                    address={n.clinic_address}
-                  />
-                  )}
+                return (
+                  <div
+                    key={i}
+                    className={`notif-card clickable ${type}`}
+                    onClick={() => setSelectedNotif(n)}
+                  >
+                    <div className="notif-header-row">
+                      <span className={`notif-type ${type}`}>
+                        {type.toUpperCase()}
+                      </span>
+                      <small>{new Date(n.created_at).toLocaleString()}</small>
+                    </div>
 
-                </div>
-              ))
+                    <h4>{n.title}</h4>
+                    <p className="notif-preview">
+                      {n.message.slice(0, 80)}...
+                    </p>
+                  </div>
+                );
+              })
             )}
           </div>
         )}
       </div>
+
+      {/* MODAL */}
+      {selectedNotif && (
+        <div className="notif-modal-overlay" onClick={() => setSelectedNotif(null)}>
+          <div className="notif-modal" onClick={e => e.stopPropagation()}>
+            <h3>{selectedNotif.title}</h3>
+            <p style={{ whiteSpace: "pre-line" }}>{selectedNotif.message}</p>
+            <small>{new Date(selectedNotif.created_at).toLocaleString()}</small>
+
+            {selectedNotif.message.includes("I will be at") && (
+              <MapFromMessage
+                lat={selectedNotif.latitude}
+                lng={selectedNotif.longitude}
+                address={selectedNotif.clinic_address}
+              />
+            )}
+
+            <button className="close-btn" onClick={() => setSelectedNotif(null)}>
+              Close
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
