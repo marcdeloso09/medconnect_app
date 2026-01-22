@@ -133,7 +133,7 @@ export default function PatientPage() {
             <p style={{ whiteSpace: "pre-line" }}>{selectedNotif.message}</p>
             <small>{new Date(selectedNotif.created_at).toLocaleString()}</small>
 
-            {selectedNotif.message.includes("I will be at") && (
+            {selectedNotif.latitude && selectedNotif.longitude && (
               <div style={{ height: "250px", marginTop: "15px", borderRadius: "10px", overflow: "hidden" }}>
                 <MapFromMessage
                   lat={selectedNotif.latitude}
