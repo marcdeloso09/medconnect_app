@@ -45,7 +45,6 @@ INSTALLED_APPS = [
     'appointmentapp',
     'cloudinary',
     'cloudinary_storage'
-    
 ]
 
 
@@ -204,9 +203,6 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
-
-INSTALLED_APPS += ['cloudinary']
-
 
 
 cloudinary.config(
