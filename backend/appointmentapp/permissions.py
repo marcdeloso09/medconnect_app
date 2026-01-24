@@ -1,6 +1,7 @@
 from rest_framework.permissions import BasePermission
 from rest_framework_simplejwt.authentication import JWTAuthentication
 
+
 class IsAuthenticatedPatient(BasePermission):
     def has_permission(self, request, view):
         auth = JWTAuthentication()
@@ -20,3 +21,4 @@ class IsAuthenticatedPatient(BasePermission):
         except Exception as e:
             print("PATIENT AUTH ERROR:", e)
             return False
+

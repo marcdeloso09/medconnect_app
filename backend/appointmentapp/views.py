@@ -1,5 +1,5 @@
 from rest_framework import generics
-from .models import Doctor, Appointment
+from .models import Doctor, Appointment, PhysicianAssistant
 from .serializers import DoctorRegisterSerializer, DoctorListSerializer, AppointmentSerializer
 from django.db.models import Q
 from rest_framework.views import APIView
@@ -14,7 +14,7 @@ from rest_framework_simplejwt.views import TokenObtainPairView
 from .serializers import DoctorTokenObtainPairSerializer
 from rest_framework_simplejwt.tokens import RefreshToken, AccessToken
 from django.conf import settings
-from .permissions import IsAuthenticatedPatient
+from .permissions import IsAuthenticatedPatient, IsAuthenticatedAssistant
 
 class DoctorRegisterView(generics.CreateAPIView):
     queryset = Doctor.objects.all()
@@ -321,7 +321,4 @@ class PatientNotificationsView(APIView):
                 "is_read": n.is_read
             } for n in notifs
         ])
-
-
-
 

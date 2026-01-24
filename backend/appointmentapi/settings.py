@@ -43,6 +43,9 @@ INSTALLED_APPS = [
     'rest_framework',
     'corsheaders',
     'appointmentapp',
+    'cloudinary',
+    'cloudinary_storage'
+    
 ]
 
 
@@ -199,6 +202,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
 
 INSTALLED_APPS += ['cloudinary']
 
