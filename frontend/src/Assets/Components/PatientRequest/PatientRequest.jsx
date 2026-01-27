@@ -1,10 +1,9 @@
-// PatientRequest.jsx
 import React, { useState } from "react";
 import "./PatientRequest.css";
 import { Link } from "react-router-dom";
 import stethoscope from "../Files/stethoscope.png";
 import agent from "../Files/agents.png";
-import api from "../../../api"; // ensure this points to your frontend api.js
+import api from "../../../api"; 
 import { formatTime12h } from "../utils/time";
 import { formatDateLong } from "../utils/time";
 
@@ -22,8 +21,8 @@ export default function PatientRequest() {
   const [isTyping, setIsTyping] = useState(false);
   const [showBookButton, setShowBookButton] = useState(false);
 
-  const [doctors, setDoctors] = useState([]);      // matched doctors
-  const [showDoctors, setShowDoctors] = useState(false); // when true, chat is hidden and doctor list shown
+  const [doctors, setDoctors] = useState([]);     
+  const [showDoctors, setShowDoctors] = useState(false);
   const [isLoadingDoctors, setIsLoadingDoctors] = useState(false);
   const chatEndRef = React.useRef(null);
 
@@ -134,9 +133,9 @@ export default function PatientRequest() {
       setIsLoadingDoctors(false);
       setShowChat(false);
       setShowDoctors(true);
-    }, 2000); // ⏳ delay before showing doctors
+    }, 2000); 
 
-  }, 1000); // ⏳ delay before AI message
+  }, 1000); 
 };
 
 
@@ -186,7 +185,6 @@ export default function PatientRequest() {
         </div>
       )}
 
-      {/* CHATBOX: hidden when showDoctors=true */}
       {showChat && !showDoctors && (
         <div className="chatbox">
 
@@ -276,7 +274,6 @@ export default function PatientRequest() {
         </div>
       )}
 
-      {/* DOCTOR RESULTS replaces the chatbox when showDoctors=true */}
      {showDoctors && (
       <div className="doctor-results-container">
 

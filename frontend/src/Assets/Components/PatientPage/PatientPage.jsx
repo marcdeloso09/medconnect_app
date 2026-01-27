@@ -125,7 +125,7 @@ export default function PatientPage() {
         )}
       </div>
 
-      {/* MODAL */}
+      {/* MODAL for notifications */}
       {selectedNotif && (
         <div className="notif-modal-overlay" onClick={() => setSelectedNotif(null)}>
           <div className="notif-modal" onClick={e => e.stopPropagation()}>

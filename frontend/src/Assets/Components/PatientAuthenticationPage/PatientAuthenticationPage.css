@@ -91,7 +91,7 @@ input[type="text"] {
   width: 96%;
 }
 
-/* Phones (320px and below) */
+/* Phones with 320px and below */
 @media (max-width: 320px){
   .patient-wrapper {
     padding: 10px;
@@ -156,7 +156,7 @@ input[type="text"] {
   }
 }
 
-/* Small tablets / large phones (up to 600px) */
+/* Small tablets and or large phones (up to 600px) */
 @media (max-width: 600px) {
   .patient-wrapper {
     padding: 20px;

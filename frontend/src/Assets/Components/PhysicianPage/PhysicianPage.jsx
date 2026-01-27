@@ -38,7 +38,6 @@ export default function PhysicianPage() {
 
     }, []);
 
-  // keep your stats exactly as before
   const [stats, setStats] = useState({
   today: 0,
   patients: 0,
@@ -69,11 +68,10 @@ const handleAction = async (id, action) => {
       headers: { Authorization: `Bearer ${token}` }
     });
 
-    //  Update the appointment in React state immediately
     setAppointments(prev =>
       prev.map(appt =>
         appt.id === id
-          ? { ...appt, status: res.data.status } // update status dynamically
+          ? { ...appt, status: res.data.status } 
           : appt
       )
     );
@@ -122,7 +120,6 @@ useEffect(() => {
 
   fetchStats();
 
-  // auto-refresh every 30 seconds (real-time feel)
   const interval = setInterval(fetchStats, 30000);
   
   return () => clearInterval(interval);
@@ -136,7 +133,6 @@ const statCards = [
 ];
 
   const logout = () => {
-    // remove the token key you used when logging in
     localStorage.removeItem("doctorToken");
     navigate("/");
   };
@@ -263,7 +259,6 @@ const statCards = [
                         }
                       });
 
-                      // ✅ force refresh preview with Cloudinary URL
                       setDoctorProfile(prev => ({
                         ...prev,
                         profile_picture: res.data.profile_picture
@@ -434,7 +429,7 @@ const statCards = [
                                   className="btn-reject"
                                   onClick={() => {
                                     setSelectedAppointment(appt);
-                                    setSelectedDoctorId(""); // reset
+                                    setSelectedDoctorId(""); 
                                     loadSameSpecialtyDoctors();
                                     setShowReferralModal(true);
                                   }}
@@ -488,8 +483,7 @@ const statCards = [
                                           headers: { Authorization: `Bearer ${token}` }
                                         }
                                       );
-
-                                      // Remove from current doctor list
+                                      
                                       setAppointments(prev =>
                                         prev.filter(a => a.id !== selectedAppointment.id)
                                       );

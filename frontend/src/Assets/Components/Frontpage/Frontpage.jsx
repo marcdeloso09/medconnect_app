@@ -19,7 +19,7 @@ export const Frontpage = () => {
       <div className="role-card">
         <h2>Choose Your Role</h2>
 
-        {/* PATIENT */}
+        {/* For PATIENT */}
         <Link to="patient" className="role-option patient">
           <div className="icon-circle">
             <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="none" stroke="white" strokeWidth="2" viewBox="0 0 24 24">
@@ -33,7 +33,7 @@ export const Frontpage = () => {
           </div>
         </Link>
 
-        {/* DOCTOR */}
+        {/* For DOCTOR */}
         <Link to="doctor" className="role-option doctor">
           <div className="icon-circle">
             <img src={stethoscope} alt="Doctor" className="logo-img" />
